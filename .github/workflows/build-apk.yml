@@ -61,20 +61,57 @@ jobs:
       - name: Sync web app
         run: npx cap sync android
 
-      - name: Apply NUR launcher icon
+      - name: Apply crisp NUR launcher icon and dark native launch
         shell: bash
         run: |
-          cat android-icon/icon-parts/* | base64 -d > /tmp/nur-icon.jpg
-          file /tmp/nur-icon.jpg
-          test -s /tmp/nur-icon.jpg
+          python3 -m pip install --quiet cairosvg pillow
           ROOT="android/app/src/main/res"
-          for density in mdpi hdpi xhdpi xxhdpi xxxhdpi; do
-            DEST="$ROOT/mipmap-$density"
-            mkdir -p "$DEST"
-            rm -f "$DEST/ic_launcher.png" "$DEST/ic_launcher.webp" "$DEST/ic_launcher_round.png" "$DEST/ic_launcher_round.webp"
-            cp /tmp/nur-icon.jpg "$DEST/ic_launcher.jpg"
-            cp /tmp/nur-icon.jpg "$DEST/ic_launcher_round.jpg"
-          done
+          python3 - <<'PY'
+          from pathlib import Path
+          import cairosvg
+          from PIL import Image
+          import io
+
+          svg=Path('android-icon/nur-icon.svg').read_bytes()
+          sizes={'mdpi':48,'hdpi':72,'xhdpi':96,'xxhdpi':144,'xxxhdpi':192}
+          root=Path('android/app/src/main/res')
+          for density,size in sizes.items():
+              png=cairosvg.svg2png(bytestring=svg,output_width=size,output_height=size)
+              im=Image.open(io.BytesIO(png)).convert('RGBA')
+              dest=root/f'mipmap-{density}'
+              dest.mkdir(parents=True,exist_ok=True)
+              for old in ('ic_launcher.webp','ic_launcher_round.webp','ic_launcher.jpg','ic_launcher_round.jpg'):
+                  (dest/old).unlink(missing_ok=True)
+              im.save(dest/'ic_launcher.png',optimize=True)
+              im.save(dest/'ic_launcher_round.png',optimize=True)
+
+          # Avoid Android's default bright/white launch frame before the WebView.
+          values=root/'values'
+          values.mkdir(parents=True,exist_ok=True)
+          colors=values/'colors.xml'
+          if colors.exists():
+              text=colors.read_text()
+              if 'nurLaunchBackground' not in text:
+                  text=text.replace('</resources>','    <color name="nurLaunchBackground">#020817</color>\n</resources>')
+                  colors.write_text(text)
+          else:
+              colors.write_text('<?xml version="1.0" encoding="utf-8"?>\n<resources>\n    <color name="nurLaunchBackground">#020817</color>\n</resources>\n')
+
+          styles=values/'styles.xml'
+          if styles.exists():
+              s=styles.read_text()
+              s=s.replace('<item name="android:background">@drawable/splash</item>','<item name="android:background">@color/nurLaunchBackground</item>')
+              s=s.replace('<item name="android:windowBackground">@drawable/splash</item>','<item name="android:windowBackground">@color/nurLaunchBackground</item>')
+              s=s.replace('<item name="windowSplashScreenBackground">@color/colorPrimary</item>','<item name="windowSplashScreenBackground">@color/nurLaunchBackground</item>')
+              styles.write_text(s)
+
+          # Android 12+ themes may live in values-v31.
+          for styles in root.glob('values-v*/styles.xml'):
+              s=styles.read_text()
+              s=s.replace('@drawable/splash','@color/nurLaunchBackground')
+              s=s.replace('<item name="windowSplashScreenBackground">@color/colorPrimary</item>','<item name="windowSplashScreenBackground">@color/nurLaunchBackground</item>')
+              styles.write_text(s)
+          PY
           rm -f "$ROOT/mipmap-anydpi-v26/ic_launcher.xml" "$ROOT/mipmap-anydpi-v26/ic_launcher_round.xml"
 
       - name: Set monotonic Android version
