@@ -1,7 +1,57 @@
 /* NUR v2 motion bridge.
-   app.js intentionally stays responsible for data. This layer only preserves
-   the previous visual fill long enough for rebuilt progress DOM to animate. */
+   app.js stays responsible for data. This layer handles the shared progress
+   animation language plus the 3-second branded loading handoff. */
 (() => {
+  const loaderCss=document.createElement('link');
+  loaderCss.rel='stylesheet';
+  loaderCss.href='loading.css';
+  document.head.appendChild(loaderCss);
+
+  const splash=document.querySelector('#splash');
+  const appShell=document.querySelector('#appShell');
+  const enter=document.querySelector('#enterApp');
+  const arc=document.querySelector('#loadingArc');
+  const percent=document.querySelector('#loadingPercent');
+
+  async function startNurLoader(){
+    if(!splash || !appShell || !enter || !arc || !percent) return;
+
+    /* The loading screen is intentionally shown on every app launch. */
+    splash.classList.remove('hidden','is-leaving');
+    appShell.classList.add('hidden');
+
+    /* The supplied artwork was recoloured into NUR navy/gold and stored as a
+       compact local base64 asset so the splash remains fully offline. */
+    try{
+      const raw=(await fetch('assets/loading-bg.b64',{cache:'force-cache'})).text();
+      if(raw) splash.style.backgroundImage=`url("data:image/jpeg;base64,${raw.trim()}")`;
+    }catch{}
+
+    const circumference=326.726;
+    const duration=3000;
+    const started=performance.now();
+    arc.style.strokeDasharray=String(circumference);
+    arc.style.strokeDashoffset=String(circumference);
+    percent.textContent='0%';
+
+    function frame(now){
+      const p=Math.min(1,(now-started)/duration);
+      const eased=1-Math.pow(1-p,3);
+      arc.style.strokeDashoffset=String(circumference*(1-eased));
+      percent.textContent=`${Math.round(p*100)}%`;
+      if(p<1){ requestAnimationFrame(frame); return; }
+
+      arc.style.strokeDashoffset='0';
+      percent.textContent='100%';
+      splash.classList.add('is-leaving');
+      setTimeout(()=>enter.click(),120);
+    }
+    requestAnimationFrame(frame);
+  }
+
+  /* Give the loader CSS one frame to attach, then begin. */
+  requestAnimationFrame(startNurLoader);
+
   const baseRender = window.render;
   if (typeof baseRender !== 'function') return;
 
@@ -48,7 +98,6 @@
       weekState.set(index,target);
     });
 
-    /* Flush once, then every progress surface moves with the same easing. */
     document.body.offsetHeight;
     requestAnimationFrame(() => {
       taskTransitions.forEach(({el,fill,targetLit}) => {
@@ -65,7 +114,5 @@
     animateRebuiltProgress();
   };
 
-  /* app.js performs its first render before this deferred script runs. Capture
-     that result as the baseline so the next user action animates from reality. */
   captureExisting();
 })();

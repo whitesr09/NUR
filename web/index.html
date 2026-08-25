@@ -14,11 +14,20 @@
 <body>
   <div class="page-pattern" aria-hidden="true"></div>
 
-  <div id="splash" class="splash">
-    <div class="splash-brand">NUR</div>
-    <div class="splash-crescent">☾</div>
-    <p>Return to what matters.</p>
-    <button id="enterApp" class="gold-btn">Enter</button>
+  <div id="splash" class="splash nur-loading-screen" aria-label="NUR is loading">
+    <div class="loading-shade" aria-hidden="true"></div>
+    <div class="loading-center">
+      <div class="loading-ring-wrap">
+        <svg class="loading-ring" viewBox="0 0 120 120" aria-hidden="true">
+          <circle class="loading-track" cx="60" cy="60" r="52"></circle>
+          <circle id="loadingArc" class="loading-arc" cx="60" cy="60" r="52"></circle>
+        </svg>
+        <div class="loading-allah">الله</div>
+      </div>
+      <div id="loadingPercent" class="loading-percent">0%</div>
+      <div class="loading-caption">نُور</div>
+    </div>
+    <button id="enterApp" class="hidden" tabindex="-1" aria-hidden="true">Enter</button>
   </div>
 
   <main id="appShell" class="app-shell hidden">

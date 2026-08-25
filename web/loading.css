@@ -1,0 +1,31 @@
+.nur-loading-screen{
+  position:fixed!important;inset:0!important;z-index:9999!important;min-height:100svh!important;
+  display:grid!important;place-items:center!important;padding:0!important;overflow:hidden!important;
+  background-color:#020817!important;background-position:center!important;background-size:cover!important;background-repeat:no-repeat!important;
+  opacity:1;transition:opacity .32s ease!important;
+}
+.nur-loading-screen.is-leaving{opacity:0!important;pointer-events:none!important}
+.nur-loading-screen .loading-shade{
+  position:absolute;inset:0;background:
+    radial-gradient(circle at 50% 46%,rgba(15,31,51,.12) 0,rgba(3,10,20,.28) 34%,rgba(1,6,14,.68) 100%),
+    linear-gradient(180deg,rgba(2,8,18,.08),rgba(2,8,18,.42));
+}
+.loading-center{position:relative;z-index:2;display:grid;place-items:center;text-align:center;transform:translateY(-1.5vh)}
+.loading-ring-wrap{width:178px;height:178px;position:relative;display:grid;place-items:center}
+.loading-ring{position:absolute;inset:0;width:100%;height:100%;transform:rotate(-90deg);overflow:visible;filter:drop-shadow(0 0 9px rgba(230,173,66,.13))}
+.loading-track,.loading-arc{fill:none;stroke-width:3.25}
+.loading-track{stroke:rgba(214,177,104,.19)}
+.loading-arc{
+  stroke:url(#none);stroke:#e6ad42;stroke-linecap:round;
+  stroke-dasharray:326.726;stroke-dashoffset:326.726;
+  filter:drop-shadow(0 0 4px rgba(255,207,102,.42));
+}
+.loading-allah{
+  position:relative;z-index:2;direction:rtl;color:#e9bd67;
+  font:500 61px/1 "Noto Naskh Arabic","Traditional Arabic",serif;
+  text-shadow:0 1px 0 rgba(255,238,184,.28),0 0 18px rgba(220,164,61,.18),0 7px 22px rgba(0,0,0,.6);
+}
+.loading-percent{margin-top:13px;color:#d9b86f;font:400 13px/1.2 Georgia,"Times New Roman",serif;letter-spacing:.08em;min-width:44px}
+.loading-caption{margin-top:9px;color:#9f8655;font:500 14px/1.2 "Noto Naskh Arabic","Traditional Arabic",serif;letter-spacing:.13em;text-shadow:0 0 10px rgba(217,160,56,.13)}
+@media(max-width:430px){.loading-ring-wrap{width:158px;height:158px}.loading-allah{font-size:55px}.loading-track,.loading-arc{stroke-width:3}}
+@media(prefers-reduced-motion:reduce){.nur-loading-screen{transition:none!important}}
