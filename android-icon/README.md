@@ -1,0 +1,1 @@
+Final NUR V2 launcher source is supplied from the user artwork and converted into density-specific Android PNG assets during GitHub Actions build. The source artwork is kept lossless to avoid the previous blurred JPEG launcher icon.
