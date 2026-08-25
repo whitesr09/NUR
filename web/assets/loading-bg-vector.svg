@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 864 1536" preserveAspectRatio="xMidYMid slice">
+<defs>
+<linearGradient id="bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#081426"/><stop offset=".55" stop-color="#030b18"/><stop offset="1" stop-color="#010611"/></linearGradient>
+<radialGradient id="wash" cx="72%" cy="12%" r="70%"><stop offset="0" stop-color="#8f6d3d" stop-opacity=".18"/><stop offset=".45" stop-color="#15233a" stop-opacity=".12"/><stop offset="1" stop-color="#020815" stop-opacity="0"/></radialGradient>
+<pattern id="geo" width="90" height="90" patternUnits="userSpaceOnUse"><path d="M45 0 90 45 45 90 0 45Z M22.5 22.5h45v45h-45z" fill="none" stroke="#b58b4e" stroke-width="1" opacity=".12"/></pattern>
+</defs>
+<rect width="864" height="1536" fill="url(#bg)"/><rect width="864" height="1536" fill="url(#wash)"/><rect width="864" height="1536" fill="url(#geo)" opacity=".18"/>
+<g fill="#a99373" opacity=".18" font-family="Noto Naskh Arabic, Amiri, serif" text-anchor="end" direction="rtl"><text x="840" y="155" font-size="125">بِسْمِ اللهِ الرَّحْمٰنِ الرَّحِيمِ</text><text x="845" y="310" font-size="175">الرَّحْمٰن</text><text x="800" y="465" font-size="180">الرَّحِيم</text><text x="720" y="625" font-size="220">النُّور</text></g>
+<g fill="#5f6b7d" opacity=".06" font-family="Noto Naskh Arabic, Amiri, serif" direction="rtl"><text x="20" y="430" font-size="260">الله</text><text x="70" y="760" font-size="225">نور</text><text x="10" y="1050" font-size="240">الرحمن</text></g>
+<rect width="864" height="1536" fill="none" stroke="#8d6b3c" stroke-opacity=".16" stroke-width="2"/>
+</svg>
