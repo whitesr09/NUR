@@ -65,10 +65,11 @@ jobs:
         shell: bash
         run: |
           python3 -m pip install --quiet pillow
+          base64 -d android-icon/nur-app-icon.b64 > android-icon/nur-app-icon-decoded.png
           python3 - <<'PY'
           from PIL import Image
           from pathlib import Path
-          src = Image.open('android-icon/nur-app-icon.png').convert('RGBA')
+          src = Image.open('android-icon/nur-app-icon-decoded.png').convert('RGBA')
           sizes = {'mdpi':48,'hdpi':72,'xhdpi':96,'xxhdpi':144,'xxxhdpi':192}
           root = Path('android/app/src/main/res')
           for density, size in sizes.items():
@@ -77,8 +78,6 @@ jobs:
               icon = src.resize((size,size), Image.Resampling.LANCZOS)
               icon.save(dest/'ic_launcher.png', optimize=True)
               icon.save(dest/'ic_launcher_round.png', optimize=True)
-          # Force Android to use the supplied raster artwork exactly rather than
-          # Capacitor's generated adaptive foreground/background layers.
           for name in ('mipmap-anydpi-v26/ic_launcher.xml','mipmap-anydpi-v26/ic_launcher_round.xml'):
               p = root / name
               if p.exists(): p.unlink()
