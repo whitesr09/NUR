@@ -77,28 +77,17 @@
 
       <article class="panel prayers-panel">
         <div class="panel-head">
-          <div>
-            <span class="eyebrow">SALAH</span>
-            <h2>Five prayers</h2>
-          </div>
+          <div><span class="eyebrow">SALAH</span><h2>Five prayers</h2></div>
           <button class="link-btn" data-open="prayers"><span id="prayerCount">0 / 5</span> ↗</button>
         </div>
         <div id="prayerList" class="prayer-list"></div>
-        <div class="prayer-progress-zone">
-          <div class="thin-progress"><i id="prayerProgressBar"></i></div>
-        </div>
+        <div class="prayer-progress-zone"><div class="thin-progress"><i id="prayerProgressBar"></i></div></div>
       </article>
 
       <article class="panel tasks-panel">
         <div class="panel-head">
-          <div>
-            <span class="eyebrow">AMANAH</span>
-            <h2>Today’s tasks</h2>
-          </div>
-          <div class="metric">
-            <strong id="taskCount">0 / 0</strong>
-            <button class="link-btn" data-open="tasks">Manage ↗</button>
-          </div>
+          <div><span class="eyebrow">AMANAH</span><h2>Today’s tasks</h2></div>
+          <div class="metric"><strong id="taskCount">0 / 0</strong><button class="link-btn" data-open="tasks">Manage ↗</button></div>
         </div>
         <div id="taskPreview" class="preview-list empty-state"></div>
         <div id="taskPillars" class="task-pillars"></div>
@@ -106,10 +95,7 @@
 
       <article class="panel muhasaba-panel">
         <div class="panel-head">
-          <div>
-            <span class="eyebrow">MUHASABA</span>
-            <h2>Self-accounting</h2>
-          </div>
+          <div><span class="eyebrow">MUHASABA</span><h2>Self-accounting</h2></div>
           <button class="link-btn" data-open="muhasaba"><span id="muhasabaCount">0 / 0</span> ↗</button>
         </div>
         <div class="muhasaba-body">
@@ -122,10 +108,7 @@
 
       <article class="panel rhythm-panel">
         <div class="panel-head">
-          <div>
-            <span class="eyebrow">RHYTHM</span>
-            <h2>Seven days of light</h2>
-          </div>
+          <div><span class="eyebrow">RHYTHM</span><h2>Seven days of light</h2></div>
           <button class="link-btn" data-open="history">History ↗</button>
         </div>
         <div id="weekBars" class="week-bars"></div>
@@ -133,27 +116,14 @@
       </article>
 
       <article class="panel archive-panel">
-        <div class="panel-head">
-          <div>
-            <span class="eyebrow">NOTES & MONEY</span>
-            <h2>Quiet archive</h2>
-          </div>
-        </div>
+        <div class="panel-head"><div><span class="eyebrow">NOTES & MONEY</span><h2>Quiet archive</h2></div></div>
         <button class="archive-row" data-open="notes">
           <span class="archive-icon">“</span>
-          <span class="archive-copy">
-            <small>Latest note</small>
-            <strong id="latestNoteTitle">No note for this day yet.</strong>
-            <em id="latestNoteBody">Keep one thought you want to carry forward.</em>
-          </span>
+          <span class="archive-copy"><small>Latest note</small><strong id="latestNoteTitle">No note for this day yet.</strong><em id="latestNoteBody">Keep one thought you want to carry forward.</em></span>
         </button>
         <button class="archive-row" data-open="money">
           <span class="archive-icon">₹</span>
-          <span class="archive-copy">
-            <small>Balance</small>
-            <strong id="balancePreview">₹0</strong>
-            <em>Charity · <span id="charityPreview">₹0</span></em>
-          </span>
+          <span class="archive-copy"><small>Balance</small><strong id="balancePreview">₹0</strong><em>Charity · <span id="charityPreview">₹0</span></em></span>
         </button>
       </article>
 
@@ -171,5 +141,6 @@
 
   <div id="toast" class="toast hidden"></div>
   <script src="app.js" defer></script>
+  <script src="v2-motion.js" defer></script>
 </body>
 </html>
