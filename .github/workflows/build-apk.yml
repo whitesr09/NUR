@@ -64,8 +64,6 @@ jobs:
           from pathlib import Path
           p=Path('web/assets/loading-bg.jpg')
           im=Image.open(p).convert('RGB')
-          # Pre-render near phone resolution so Android WebView does not magnify
-          # the small JPEG directly, which caused visible blockiness.
           target=(1080,1920)
           im=im.resize(target,Image.Resampling.LANCZOS)
           im=im.filter(ImageFilter.UnsharpMask(radius=1.0,percent=70,threshold=3))
@@ -82,30 +80,28 @@ jobs:
       - name: Apply crisp NUR launcher icon
         shell: bash
         run: |
+          base64 -d android-icon/nur-app-icon.b64 > /tmp/nur-icon.png
+          file /tmp/nur-icon.png
+          test -s /tmp/nur-icon.png
           python3 - <<'PY'
           from PIL import Image
           from pathlib import Path
-          src_path=Path('android-icon/nur-app-icon.png')
-          if not src_path.exists():
-              raise SystemExit('Missing android-icon/nur-app-icon.png')
-          src=Image.open(src_path).convert('RGBA')
+          src=Image.open('/tmp/nur-icon.png').convert('RGBA')
           sizes={'mdpi':48,'hdpi':72,'xhdpi':96,'xxhdpi':144,'xxxhdpi':192}
           root=Path('android/app/src/main/res')
           for density,size in sizes.items():
               dest=root/f'mipmap-{density}'
               dest.mkdir(parents=True,exist_ok=True)
-              for old in ['ic_launcher.webp','ic_launcher_round.webp','ic_launcher.jpg','ic_launcher_round.jpg']:
+              for old in ['ic_launcher.webp','ic_launcher_round.webp','ic_launcher.jpg','ic_launcher_round.jpg','ic_launcher.png','ic_launcher_round.png']:
                   q=dest/old
                   if q.exists(): q.unlink()
               icon=src.resize((size,size),Image.Resampling.LANCZOS)
               icon.save(dest/'ic_launcher.png',optimize=True)
               icon.save(dest/'ic_launcher_round.png',optimize=True)
-          # Do not let Capacitor's adaptive foreground/background override the
-          # user's supplied artwork on Android 8+.
           for name in ['mipmap-anydpi-v26/ic_launcher.xml','mipmap-anydpi-v26/ic_launcher_round.xml']:
               q=root/name
               if q.exists(): q.unlink()
-          print('Launcher icons generated from lossless PNG source')
+          print('Launcher icons generated from decoded lossless PNG source', src.size)
           PY
 
       - name: Remove native white launch flash
@@ -132,12 +128,7 @@ jobs:
           import re
           p=Path('android/app/src/main/res/values/styles.xml')
           s=p.read_text()
-          # Capacitor normally points the launch theme to @drawable/splash.
-          # Replace that starting window with NUR navy so no white frame can
-          # appear while the WebView is being created.
           s=s.replace('@drawable/splash','@drawable/nur_launch_background')
-          if 'android:windowBackground' not in s:
-              s=s.replace('</style>\n\n    <style name="AppTheme.NoActionBarLaunch"', '</style>\n\n    <style name="AppTheme.NoActionBarLaunch"',1)
           launch=re.search(r'(<style name="AppTheme\.NoActionBarLaunch"[^>]*>)(.*?)(</style>)',s,re.S)
           if launch:
               body=launch.group(2)
@@ -188,11 +179,9 @@ jobs:
           UNSIGNED="android/app/build/outputs/apk/release/app-release-unsigned.apk"
           ALIGNED="android/app/build/outputs/apk/release/NUR-v2-aligned.apk"
           SIGNED="android/app/build/outputs/apk/release/NUR-v2.apk"
-
           test -x "$ZIPALIGN"
           test -x "$APKSIGNER"
           test -f "$UNSIGNED"
-
           "$ZIPALIGN" -f -p 4 "$UNSIGNED" "$ALIGNED"
           "$APKSIGNER" sign \
             --ks signing/runtime/nur-release.p12 \
@@ -202,7 +191,6 @@ jobs:
             --key-pass env:NUR_SIGNING_PASSWORD \
             --out "$SIGNED" \
             "$ALIGNED"
-
           "$APKSIGNER" verify --verbose --print-certs "$SIGNED"
 
       - name: Upload signed APK
