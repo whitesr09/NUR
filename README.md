@@ -1,18 +1,5 @@
 # NUR
 
-NUR is a private-first personal Deen and discipline dashboard built as an installable Android app and PWA.
+NUR is a personal Deen and disciplinary tracking system built as a mobile-first Android/PWA experience.
 
-## Features
-- Salah tracking
-- Amanah/task tracking
-- Muhasaba intentions
-- Notes and reflections
-- Money, expense and sadaqah tracking
-- Seven-day history and Daily Light progress
-- Local-first storage with no paid backend required
-
-## Android
-GitHub Actions builds a debug APK automatically from the web app using Capacitor.
-
-## Privacy
-The current version stores dashboard data locally on the user's device.
+Current line: NUR V2 — signed Android release with interactive Salah, Amanah, Muhasaba, Rhythm, notes, money, Daily Light, branded loading experience, permanent update-compatible signing, and crisp launcher/splash handling.
