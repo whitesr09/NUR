@@ -21,7 +21,8 @@
   ];
 
   function prepareLoadingCopy(){
-    if(caption) caption.textContent='NUR';
+    /* Keep the title outside the progress ring and in Arabic. */
+    if(caption) caption.textContent='نُور';
     if(!splash) return;
     let bottom=splash.querySelector('.loading-bottom');
     if(!bottom){
@@ -63,7 +64,7 @@
       setTimeout(()=>{
         enter.click();
         document.documentElement.classList.add('nur-loader-done');
-      },340);
+      },300);
     }
     requestAnimationFrame(frame);
   }
@@ -96,8 +97,6 @@
       const fill=el.querySelector('.pillar-shell i');
       if(!fill) return;
 
-      /* Only replay the candle movement if THIS task changed. Unrelated renders
-         (Muhasaba, prayer, notes, money, history) leave Amanah visually still. */
       if(hadPrevious && previousLit!==targetLit){
         el.classList.toggle('lit',previousLit);
         fill.style.setProperty('--fill',previousLit?'100%':'6%');
