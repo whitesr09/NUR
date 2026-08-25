@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="2400" viewBox="0 0 1080 2400">
+<defs>
+ <radialGradient id="g" cx="50%" cy="38%" r="78%"><stop stop-color="#0b2033"/><stop offset=".45" stop-color="#041525"/><stop offset="1" stop-color="#010711"/></radialGradient>
+ <linearGradient id="h" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#d9a13a" stop-opacity=".24"/><stop offset="1" stop-color="#d9a13a" stop-opacity="0"/></linearGradient>
+ <pattern id="p" width="132" height="132" patternUnits="userSpaceOnUse"><path d="M66 3 96 36 129 66 96 96 66 129 36 96 3 66 36 36Z M66 26 106 66 66 106 26 66Z" fill="none" stroke="#d7a03a" stroke-opacity=".08" stroke-width="2"/></pattern>
+ <filter id="blur"><feGaussianBlur stdDeviation="30"/></filter>
+</defs>
+<rect width="1080" height="2400" fill="url(#g)"/>
+<rect width="1080" height="2400" fill="url(#p)"/>
+<path d="M45 0v2400M1035 0v2400" stroke="#d39a32" stroke-opacity=".18" stroke-width="2"/>
+<path d="M80 125h920M80 2275h920" stroke="#d39a32" stroke-opacity=".22" stroke-width="2"/>
+<path d="M540 100l12 24 24 12-24 12-12 24-12-24-24-12 24-12z" fill="#dca642" fill-opacity=".72"/>
+<ellipse cx="540" cy="1020" rx="430" ry="500" fill="#0b2940" fill-opacity=".22" filter="url(#blur)"/>
+<path d="M80 2180h920v220H80z" fill="#010711" fill-opacity=".45"/>
+<g fill="#010711" fill-opacity=".82"><path d="M0 2240h1080v160H0z"/><path d="M120 2240v-160h32v160zm-10-160 26-55 26 55zM880 2240v-210h34v210zm-10-210 27-60 27 60z"/><path d="M360 2240v-120h150v120zm25-120q50-90 100 0zM600 2240v-150h180v150zm25-150q65-115 130 0z"/></g>
+</svg>
