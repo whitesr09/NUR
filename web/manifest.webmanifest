@@ -1,0 +1,11 @@
+{
+  "name":"NUR — Intentional Day",
+  "short_name":"NUR",
+  "description":"A private daily dashboard for salah, responsibilities, reflection, notes and money.",
+  "start_url":"./",
+  "scope":"./",
+  "display":"standalone",
+  "background_color":"#050912",
+  "theme_color":"#07101f",
+  "icons":[{"src":"icon.svg","sizes":"any","type":"image/svg+xml","purpose":"any maskable"}]
+}
