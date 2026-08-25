@@ -1,4 +1,5 @@
 name: Build Android APK
+
 on:
   workflow_dispatch:
   push:
@@ -7,33 +8,107 @@ on:
       - "web/**"
       - "package.json"
       - "capacitor.config.json"
+      - "signing/**"
       - ".github/workflows/build-apk.yml"
+
 permissions:
   contents: read
+
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      NUR_SIGNING_PASSWORD: ${{ secrets.NUR_SIGNING_PASSWORD }}
+
     steps:
       - uses: actions/checkout@v4
+
       - uses: actions/setup-node@v4
         with:
           node-version: 22
+
       - uses: actions/setup-java@v4
         with:
           distribution: temurin
           java-version: 21
+
+      - name: Require permanent signing secret
+        shell: bash
+        run: |
+          if [ -z "$NUR_SIGNING_PASSWORD" ]; then
+            echo "::error::Repository secret NUR_SIGNING_PASSWORD is missing."
+            exit 1
+          fi
+
+      - name: Restore permanent NUR signing key
+        shell: bash
+        run: |
+          mkdir -p signing/runtime
+          base64 -d signing/nur-release.p12.b64 > signing/runtime/nur-release.p12
+          keytool -list \
+            -storetype PKCS12 \
+            -keystore signing/runtime/nur-release.p12 \
+            -storepass "$NUR_SIGNING_PASSWORD" \
+            -alias nur-release >/dev/null
+
       - name: Install dependencies
         run: npm install
+
       - name: Create Android project
         run: npx cap add android
+
       - name: Sync web app
         run: npx cap sync android
-      - name: Build debug APK
+
+      - name: Set monotonic Android version
+        shell: bash
+        run: |
+          VERSION_CODE=$((2000 + GITHUB_RUN_NUMBER))
+          VERSION_NAME="2.0.${GITHUB_RUN_NUMBER}"
+          python3 - <<PY
+          from pathlib import Path
+          import re
+          p=Path("android/app/build.gradle")
+          s=p.read_text()
+          s=re.sub(r'versionCode\s+\d+', 'versionCode ${VERSION_CODE}', s)
+          s=re.sub(r'versionName\s+"[^"]+"', 'versionName "${VERSION_NAME}"', s)
+          p.write_text(s)
+          PY
+          echo "Building version $VERSION_NAME ($VERSION_CODE)"
+
+      - name: Build unsigned release APK
         working-directory: android
-        run: ./gradlew assembleDebug
-      - name: Upload APK
+        run: ./gradlew assembleRelease
+
+      - name: Align and sign release APK
+        shell: bash
+        run: |
+          BUILD_TOOLS="$(find "$ANDROID_HOME/build-tools" -mindepth 1 -maxdepth 1 -type d | sort -V | tail -n 1)"
+          ZIPALIGN="$BUILD_TOOLS/zipalign"
+          APKSIGNER="$BUILD_TOOLS/apksigner"
+          UNSIGNED="android/app/build/outputs/apk/release/app-release-unsigned.apk"
+          ALIGNED="android/app/build/outputs/apk/release/NUR-v2-aligned.apk"
+          SIGNED="android/app/build/outputs/apk/release/NUR-v2.apk"
+
+          test -x "$ZIPALIGN"
+          test -x "$APKSIGNER"
+          test -f "$UNSIGNED"
+
+          "$ZIPALIGN" -f -p 4 "$UNSIGNED" "$ALIGNED"
+          "$APKSIGNER" sign \
+            --ks signing/runtime/nur-release.p12 \
+            --ks-type PKCS12 \
+            --ks-key-alias nur-release \
+            --ks-pass env:NUR_SIGNING_PASSWORD \
+            --key-pass env:NUR_SIGNING_PASSWORD \
+            --out "$SIGNED" \
+            "$ALIGNED"
+
+          "$APKSIGNER" verify --verbose --print-certs "$SIGNED"
+
+      - name: Upload signed APK
         uses: actions/upload-artifact@v4
         with:
-          name: NUR-Android-APK
-          path: android/app/build/outputs/apk/debug/app-debug.apk
+          name: NUR-v2-signed-APK
+          path: android/app/build/outputs/apk/release/NUR-v2.apk
           if-no-files-found: error
