@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <meta name="theme-color" content="#07101f" />
+  <meta name="description" content="NUR — a private dashboard for intentional Muslim living." />
+  <link rel="manifest" href="manifest.webmanifest" />
+  <link rel="icon" href="icon.svg" />
+  <link rel="apple-touch-icon" href="icon.svg" />
+  <link rel="stylesheet" href="styles.css" />
+  <title>NUR — Intentional Day</title>
+</head>
+<body>
+  <div class="bg-veil" aria-hidden="true"></div>
+  <div id="splash" class="splash">
+    <div class="splash-mark">نُور</div>
+    <div class="eyebrow">A PRIVATE PLACE TO RETURN TO WHAT MATTERS</div>
+    <h1>See the day.<br><em>Keep the intention.</em></h1>
+    <p>Salah, responsibilities, reflection, notes and money — gathered quietly in one place.</p>
+    <button id="enterApp" class="gold-btn">Enter the dashboard</button>
+  </div>
+
+  <main id="appShell" class="app-shell hidden">
+    <header class="topbar">
+      <div><div class="brand">NUR</div><div class="brand-sub">A private rhythm for worship, responsibility and reflection.</div></div>
+      <nav class="desktop-nav" aria-label="Primary"><button data-open="prayers">Prayers</button><button data-open="tasks">Tasks</button><button data-open="muhasaba">Muhasaba</button><button data-open="notes">Notes</button><button data-open="money">Money</button></nav>
+      <div class="day-label"><span>TODAY</span><strong id="todayLabel"></strong></div>
+    </header>
+    <section class="dashboard-grid">
+      <article class="panel prayers-panel"><div class="panel-head"><div><span class="eyebrow">SALAH</span><h2>Five prayers</h2></div><button class="link-btn" data-open="prayers">Open ↗</button></div><div id="prayerList" class="prayer-list"></div><div class="progress-row"><div class="thin-progress"><i id="prayerProgressBar"></i></div><small id="prayerCount"></small></div></article>
+      <article class="panel light-panel"><span class="eyebrow center">DAILY LIGHT</span><div class="light-scene"><div id="lightHalo" class="light-halo"><div class="halo-ring ring-a"></div><div class="halo-ring ring-b"></div><div class="halo-ring ring-c"></div><div class="allah">الله</div><div id="lightPercent" class="light-percent">0%</div></div><div class="arch arch-left"></div><div class="arch arch-right"></div></div><p class="light-copy">The scene brightens as the rhythm of your day fills.</p><div class="light-weights"><span>45% prayer</span><span>40% tasks</span><span>15% muhasaba</span></div></article>
+      <article class="panel tasks-panel"><div class="panel-head"><div><span class="eyebrow">AMANAH</span><h2>Today's tasks</h2></div><div class="metric"><strong id="taskCount">0 / 0</strong><button class="link-btn" data-open="tasks">Manage ↗</button></div></div><div id="taskPreview" class="preview-list empty-state"></div><div id="taskPillars" class="pillars"></div></article>
+      <article class="panel muhasaba-panel"><div class="panel-head"><div><span class="eyebrow">MUHASABA</span><h2>Self-accounting</h2></div><button class="link-btn" data-open="muhasaba"><span id="muhasabaCount">0 / 0</span> ↗</button></div><div class="donut-wrap"><div id="muhasabaDonut" class="donut"><span id="muhasabaPercent">0%</span></div><div id="muhasabaPreview" class="compact-list"></div></div></article>
+      <article class="panel rhythm-panel"><div class="panel-head"><div><span class="eyebrow">RHYTHM</span><h2>Seven days of light</h2></div><button class="link-btn" data-open="history">Day history ↗</button></div><div id="weekBars" class="week-bars"></div></article>
+      <article class="panel archive-panel"><div class="panel-head"><div><span class="eyebrow">NOTES & MONEY</span><h2>Quiet archive</h2></div></div><button class="archive-note" data-open="notes"><span>✦ Latest note</span><strong id="latestNoteTitle">No note for this day yet.</strong><small id="latestNoteBody">Keep one thought you want to carry forward.</small></button><button class="money-mini" data-open="money"><span><small>Balance</small><strong id="balancePreview">₹0</strong></span><span><small>Charity</small><strong id="charityPreview">₹0</strong></span></button></article>
+    </section>
+    <nav class="mobile-nav" aria-label="Mobile primary"><button data-open="prayers"><span>◉</span><small>Salah</small></button><button data-open="tasks"><span>✓</span><small>Tasks</small></button><button data-open="muhasaba"><span>◌</span><small>Reflect</small></button><button data-open="notes"><span>✦</span><small>Notes</small></button><button data-open="money"><span>₹</span><small>Money</small></button></nav>
+  </main>
+  <div id="modalRoot" class="modal-root hidden" aria-hidden="true"><div class="modal-backdrop" data-close></div><section class="modal-card" role="dialog" aria-modal="true"><button class="modal-close" data-close aria-label="Close">×</button><div id="modalContent"></div></section></div>
+  <template id="rowTemplate"><div class="editable-row"><button class="check"></button><div class="row-copy"><strong></strong><small></small></div><button class="delete">Delete</button></div></template>
+  <script src="app.js" defer></script>
+</body>
+</html>
