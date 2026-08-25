@@ -33,14 +33,15 @@
 
   <main id="appShell" class="app-shell hidden">
     <section class="dashboard-frame">
-      <header class="hero-head">
-        <div class="brand-lockup">
-          <div class="brand">NUR</div>
+      <header class="hero-head split-hero-head">
+        <div class="header-brand-side">
+          <div class="brand brand-arabic" lang="ar" dir="rtl">نُور</div>
           <span class="brand-spark">✦</span>
-          <div class="date-stack">
-            <small id="weekdayLabel"></small>
-            <strong id="todayLabel"></strong>
-          </div>
+        </div>
+        <div class="bismillah-center" lang="ar" dir="rtl">بِسْمِ اللهِ الرَّحْمٰنِ الرَّحِيمِ</div>
+        <div class="date-stack header-date-side">
+          <small id="weekdayLabel"></small>
+          <strong id="todayLabel"></strong>
         </div>
       </header>
 
@@ -110,7 +111,7 @@
         </div>
         <div class="muhasaba-body">
           <div id="muhasabaDonut" class="muhasaba-donut" style="--angle:0deg">
-            <div class="donut-hole"><span id="muhasabaPercent">0</span><small>%</small></div>
+            <div class="donut-hole"><div class="muhasaba-value"><span id="muhasabaPercent">0</span><small>%</small></div></div>
           </div>
           <div id="muhasabaPreview" class="compact-list"></div>
         </div>
