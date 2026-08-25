@@ -64,8 +64,9 @@ jobs:
       - name: Apply NUR launcher icon
         shell: bash
         run: |
-          base64 -d android-icon/nur-app-icon-jpg.b64 > /tmp/nur-icon.jpg
+          cat android-icon/icon-parts/* | base64 -d > /tmp/nur-icon.jpg
           file /tmp/nur-icon.jpg
+          test -s /tmp/nur-icon.jpg
           ROOT="android/app/src/main/res"
           for density in mdpi hdpi xhdpi xxhdpi xxxhdpi; do
             DEST="$ROOT/mipmap-$density"
