@@ -1,3 +1,5 @@
+@import url('v2-header-fix.css');
+
 html:not(.nur-loader-done) #splash{display:grid!important;visibility:visible!important}
 html:not(.nur-loader-done) #appShell{display:none!important}
 
