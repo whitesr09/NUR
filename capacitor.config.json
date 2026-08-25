@@ -1,0 +1,7 @@
+{
+  "appId":"app.nur.intentional",
+  "appName":"NUR",
+  "webDir":"web",
+  "server":{"androidScheme":"https"},
+  "android":{"allowMixedContent":false}
+}
