@@ -2,30 +2,46 @@
    app.js stays responsible for data. This layer handles the shared progress
    animation language plus the 3-second branded loading handoff. */
 (() => {
-  const loaderCss=document.createElement('link');
-  loaderCss.rel='stylesheet';
-  loaderCss.href='loading.css';
-  document.head.appendChild(loaderCss);
-
   const splash=document.querySelector('#splash');
   const appShell=document.querySelector('#appShell');
   const enter=document.querySelector('#enterApp');
   const arc=document.querySelector('#loadingArc');
   const percent=document.querySelector('#loadingPercent');
+  const caption=document.querySelector('.loading-caption');
 
-  async function startNurLoader(){
+  const quotes=[
+    {text:'Indeed, with hardship comes ease.',source:'Qur’an 94:6'},
+    {text:'Remember Me; I will remember you.',source:'Qur’an 2:152'},
+    {text:'Allah does not burden a soul beyond what it can bear.',source:'Qur’an 2:286'},
+    {text:'And whoever relies upon Allah — then He is sufficient for him.',source:'Qur’an 65:3'},
+    {text:'Surely in the remembrance of Allah do hearts find comfort.',source:'Qur’an 13:28'},
+    {text:'So be patient. Indeed, the promise of Allah is truth.',source:'Qur’an 30:60'},
+    {text:'The deeds most beloved to Allah are those done consistently, even if small.',source:'Sahih al-Bukhari & Muslim'},
+    {text:'Allah is gentle and loves gentleness in all matters.',source:'Sahih al-Bukhari & Muslim'}
+  ];
+
+  function prepareLoadingCopy(){
+    if(caption) caption.textContent='NUR';
+    if(!splash) return;
+    let bottom=splash.querySelector('.loading-bottom');
+    if(!bottom){
+      bottom=document.createElement('div');
+      bottom.className='loading-bottom';
+      bottom.innerHTML='<div class="loading-quote"></div><span class="loading-source"></span><div class="loading-madeby">Made by NSHD</div>';
+      splash.appendChild(bottom);
+    }
+    const pick=quotes[Math.floor(Math.random()*quotes.length)];
+    bottom.querySelector('.loading-quote').textContent=`“${pick.text}”`;
+    bottom.querySelector('.loading-source').textContent=pick.source;
+  }
+
+  function startNurLoader(){
     if(!splash || !appShell || !enter || !arc || !percent) return;
 
-    /* The loading screen is intentionally shown on every app launch. */
+    document.documentElement.classList.remove('nur-loader-done');
     splash.classList.remove('hidden','is-leaving');
     appShell.classList.add('hidden');
-
-    /* The supplied artwork was recoloured into NUR navy/gold and stored as a
-       compact local base64 asset so the splash remains fully offline. */
-    try{
-      const raw=(await fetch('assets/loading-bg.b64',{cache:'force-cache'})).text();
-      if(raw) splash.style.backgroundImage=`url("data:image/jpeg;base64,${raw.trim()}")`;
-    }catch{}
+    prepareLoadingCopy();
 
     const circumference=326.726;
     const duration=3000;
@@ -39,17 +55,19 @@
       const eased=1-Math.pow(1-p,3);
       arc.style.strokeDashoffset=String(circumference*(1-eased));
       percent.textContent=`${Math.round(p*100)}%`;
-      if(p<1){ requestAnimationFrame(frame); return; }
+      if(p<1){requestAnimationFrame(frame);return;}
 
       arc.style.strokeDashoffset='0';
       percent.textContent='100%';
       splash.classList.add('is-leaving');
-      setTimeout(()=>enter.click(),120);
+      setTimeout(()=>{
+        enter.click();
+        document.documentElement.classList.add('nur-loader-done');
+      },340);
     }
     requestAnimationFrame(frame);
   }
 
-  /* Give the loader CSS one frame to attach, then begin. */
   requestAnimationFrame(startNurLoader);
 
   const baseRender = window.render;
@@ -104,7 +122,7 @@
         el.classList.toggle('lit',targetLit);
         fill.style.setProperty('--fill',targetLit?'100%':'6%');
       });
-      weekTransitions.forEach(({fill,target}) => { fill.style.height=`${target}%`; });
+      weekTransitions.forEach(({fill,target}) => {fill.style.height=`${target}%`;});
     });
   }
 
