@@ -76,11 +76,13 @@
 .preview-row{padding:10px 0!important}
 .preview-row .preview-check{width:31px!important;height:31px!important;border-radius:10px!important}
 .preview-copy strong{font-size:13px!important}
-.task-pillars{min-height:142px!important;gap:7px!important;padding:23px 16px 20px!important}
-.task-pillar{flex-basis:44px!important;height:103px!important}
-.pillar-shell{border-radius:24px 24px 0 0!important}
-.pillar-shell:before{top:-17px!important;font-size:14px!important}
-.pillar-shell i{left:5px!important;right:5px!important;bottom:5px!important}
+.task-pillars{min-height:142px!important;gap:7px!important;padding:25px 16px 20px!important;overflow-x:auto!important;overflow-y:hidden!important}
+.task-pillar{flex-basis:44px!important;height:103px!important;position:relative!important;overflow:visible!important}
+.task-pillar::before{content:"☾";position:absolute;top:-18px;left:50%;transform:translateX(-50%);color:#8d8068;font-size:14px;line-height:1;z-index:3;pointer-events:none}
+.pillar-shell{border-radius:24px 24px 0 0!important;overflow:hidden!important;contain:paint;isolation:isolate}
+.pillar-shell:before{display:none!important}
+.pillar-shell i{left:5px!important;right:5px!important;bottom:5px!important;max-height:calc(100% - 10px)!important;box-sizing:border-box!important;overflow:hidden!important}
+.task-pillar.lit .pillar-shell i{height:calc(100% - 10px)!important;max-height:calc(100% - 10px)!important;box-shadow:inset 0 1px #fff0a2,0 0 12px rgba(238,182,71,.26)!important}
 
 /* Muhasaba */
 .muhasaba-body{grid-template-columns:116px 1fr!important;padding:14px 16px 23px!important;gap:14px!important}
