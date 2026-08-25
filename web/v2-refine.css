@@ -1,0 +1,124 @@
+/* NUR v2 refinement: compact mobile proportions + one shared progress motion language */
+@property --angle{syntax:'<angle>';inherits:false;initial-value:0deg}
+@property --fill{syntax:'<percentage>';inherits:false;initial-value:6%}
+
+:root{
+  --progress-ease:cubic-bezier(.22,.78,.22,1);
+  --progress-time:.72s;
+}
+
+/* Use the same smooth forward/back easing everywhere progress can move. */
+.light-orbit,.light-beam,.muhasaba-donut,.day-ring{
+  transition:--angle var(--progress-time) var(--progress-ease),filter .45s ease,box-shadow .45s ease!important;
+}
+.thin-progress i{
+  transition:width var(--progress-time) var(--progress-ease)!important;
+}
+.pillar-shell i{
+  height:var(--fill,6%)!important;
+  transition:height var(--progress-time) var(--progress-ease),background .42s ease,box-shadow .42s ease!important;
+}
+.task-pillar.lit .pillar-shell i{height:var(--fill,100%)!important}
+.week-fill{
+  transition:height var(--progress-time) var(--progress-ease),filter .45s ease!important;
+}
+
+/* Muhasaba percentage follows the gold system rather than plain white. */
+.donut-hole span,.donut-hole small{
+  color:#f4c45f!important;
+  text-shadow:0 0 16px rgba(230,173,66,.16);
+}
+
+/* Compact the dashboard without changing the Daily Light visual language. */
+.app-shell{max-width:900px!important;padding:0 10px 58px!important}
+.dashboard-frame{margin-top:10px!important;padding:12px 12px 18px!important;border-radius:26px!important}
+.hero-head{padding:5px 0 14px!important}
+.brand{font-size:48px!important}
+.date-stack{margin-top:3px!important}
+.date-stack strong{font-size:15px!important}
+
+.panel{margin-top:14px!important;border-radius:24px!important}
+.panel-head{padding:24px 24px 13px!important}
+.panel h2{font-size:29px!important}
+.metric>strong{font-size:23px!important}
+
+/* Daily Light: same nested-circle / arch design, simply proportioned for phone viewing. */
+.light-panel{min-height:610px!important;padding:31px 24px 0!important}
+.ornament-arch{height:225px!important}
+.lattice{height:285px!important;top:-138px!important}
+.arch-line-a{height:210px!important;top:58px!important}
+.arch-line-b{height:190px!important;top:75px!important}
+.light-stage{height:335px!important;margin-top:4px!important}
+.light-stage:before{width:300px!important;height:300px!important}
+.light-stage:after{width:258px!important;height:258px!important}
+.light-orbit{width:236px!important;height:236px!important;box-shadow:0 0 0 13px #11192b,0 0 0 28px #0b1325!important}
+.light-orbit-inner{inset:14px!important}
+.light-beam{inset:15px!important}
+.allah-word{font-size:56px!important}
+.light-percent{top:156px!important;font-size:16px!important}
+.light-copy{font-size:14px!important;margin:7px auto 14px!important}
+.light-weights{gap:8px!important}
+.light-weights span{padding:6px 10px!important;font-size:8px!important}
+.mosque-silhouette{height:190px!important}
+
+/* Salah cards */
+.prayer-list{gap:9px!important;padding:12px 24px 5px!important}
+.prayer-item{grid-template-columns:44px 1fr 22px!important;gap:13px!important;min-height:76px!important;padding:12px!important;border-radius:19px!important}
+.prayer-index,.preview-check{width:42px!important;height:42px!important;border-radius:13px!important}
+.prayer-item strong{font-size:17px!important}
+.prayer-progress-zone{padding:16px 24px 24px!important;margin-top:3px!important}
+
+/* Amanah */
+.preview-list,.compact-list{padding-left:24px!important;padding-right:24px!important}
+.preview-row{padding:12px 0!important}
+.preview-row .preview-check{width:34px!important;height:34px!important;border-radius:11px!important}
+.task-pillars{min-height:165px!important;gap:8px!important;padding:28px 24px 25px!important}
+.task-pillar{flex-basis:52px!important;height:125px!important}
+.pillar-shell{border-radius:28px 28px 0 0!important}
+.pillar-shell:before{top:-19px!important;font-size:15px!important}
+
+/* Muhasaba */
+.muhasaba-body{grid-template-columns:minmax(132px,36%) 1fr!important;padding:18px 24px 30px!important;gap:18px!important}
+.muhasaba-donut{max-width:185px!important;width:100%!important;padding:14px!important}
+.donut-hole span{font-size:41px!important}
+.compact-list .preview-row{padding:13px 0!important}
+
+/* Rhythm */
+.week-bars{height:245px!important;gap:9px!important;padding:25px 22px 20px!important}
+.week-arch{height:170px!important;border-radius:29px 29px 0 0!important}
+.week-fill{left:5px!important;right:5px!important}
+
+/* Archive and footer */
+.archive-row{min-height:82px!important;margin-left:24px!important;margin-right:24px!important;padding:12px 14px!important}
+.archive-icon{width:54px!important;height:54px!important}
+.frame-foot{padding:22px 18px 8px!important}
+
+@media(max-width:600px){
+  .app-shell{padding-left:6px!important;padding-right:6px!important}
+  .dashboard-frame{padding:9px 9px 16px!important;border-radius:23px!important}
+  .brand{font-size:44px!important}
+  .panel{border-radius:21px!important}
+  .panel-head{padding:20px 18px 11px!important}
+  .panel h2{font-size:27px!important}
+  .light-panel{min-height:575px!important;padding:27px 16px 0!important}
+  .light-stage{height:315px!important}
+  .light-stage:before{width:280px!important;height:280px!important}
+  .light-stage:after{width:242px!important;height:242px!important}
+  .light-orbit{width:220px!important;height:220px!important;box-shadow:0 0 0 12px #11192b,0 0 0 25px #0b1325!important}
+  .allah-word{font-size:52px!important}
+  .light-percent{top:146px!important}
+  .prayer-list{padding-left:18px!important;padding-right:18px!important}
+  .prayer-progress-zone{padding-left:18px!important;padding-right:18px!important}
+  .preview-list,.compact-list{padding-left:18px!important;padding-right:18px!important}
+  .task-pillars{padding-left:18px!important;padding-right:18px!important}
+  .task-pillar{flex-basis:48px!important;height:116px!important}
+  .muhasaba-body{grid-template-columns:128px 1fr!important;padding-left:18px!important;padding-right:18px!important}
+  .muhasaba-donut{max-width:148px!important;padding:11px!important}
+  .donut-hole span{font-size:34px!important}
+  .week-bars{height:225px!important;padding-left:16px!important;padding-right:16px!important;gap:7px!important}
+  .week-arch{height:155px!important;border-radius:25px 25px 0 0!important}
+}
+
+@media(prefers-reduced-motion:reduce){
+  .light-orbit,.light-beam,.muhasaba-donut,.day-ring,.thin-progress i,.pillar-shell i,.week-fill{transition-duration:.01ms!important}
+}
