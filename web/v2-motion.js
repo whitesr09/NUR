@@ -7,7 +7,6 @@
   const enter=document.querySelector('#enterApp');
   const arc=document.querySelector('#loadingArc');
   const percent=document.querySelector('#loadingPercent');
-  const caption=document.querySelector('.loading-caption');
 
   const quotes=[
     {text:'Indeed, with hardship comes ease.',source:'Qur’an 94:6'},
@@ -21,7 +20,6 @@
   ];
 
   function prepareLoadingCopy(){
-    if(caption) caption.textContent='NUR';
     if(!splash) return;
     let bottom=splash.querySelector('.loading-bottom');
     if(!bottom){
@@ -37,7 +35,6 @@
 
   function startNurLoader(){
     if(!splash || !appShell || !enter || !arc || !percent) return;
-
     document.documentElement.classList.remove('nur-loader-done');
     splash.classList.remove('hidden','is-leaving');
     appShell.classList.add('hidden');
@@ -56,7 +53,6 @@
       arc.style.strokeDashoffset=String(circumference*(1-eased));
       percent.textContent=`${Math.round(p*100)}%`;
       if(p<1){requestAnimationFrame(frame);return;}
-
       arc.style.strokeDashoffset='0';
       percent.textContent='100%';
       splash.classList.add('is-leaving');
@@ -72,14 +68,11 @@
 
   const baseRender = window.render;
   if (typeof baseRender !== 'function') return;
-
   const taskState = new Map();
   const weekState = new Map();
 
   function captureExisting(){
-    document.querySelectorAll('[data-task-pillar]').forEach(el => {
-      taskState.set(el.dataset.taskPillar, el.classList.contains('lit'));
-    });
+    document.querySelectorAll('[data-task-pillar]').forEach(el => taskState.set(el.dataset.taskPillar, el.classList.contains('lit')));
     document.querySelectorAll('#weekBars .week-col').forEach((col,index) => {
       const fill = col.querySelector('.week-fill');
       if(fill) weekState.set(index, parseFloat(fill.style.height) || 0);
@@ -95,16 +88,11 @@
       const previousLit=hadPrevious ? taskState.get(id) : targetLit;
       const fill=el.querySelector('.pillar-shell i');
       if(!fill) return;
-
-      /* Only replay the candle movement if THIS task changed. Unrelated renders
-         (Muhasaba, prayer, notes, money, history) leave Amanah visually still. */
       if(hadPrevious && previousLit!==targetLit){
         el.classList.toggle('lit',previousLit);
         fill.style.setProperty('--fill',previousLit?'100%':'6%');
         taskTransitions.push({el,fill,targetLit});
-      }else{
-        fill.style.setProperty('--fill',targetLit?'100%':'6%');
-      }
+      }else fill.style.setProperty('--fill',targetLit?'100%':'6%');
       taskState.set(id,targetLit);
     });
 
@@ -117,29 +105,18 @@
       if(!fill)return;
       const target=parseFloat(fill.style.height)||0;
       const previous=weekState.has(index)?weekState.get(index):target;
-      if(previous!==target){
-        fill.style.height=`${previous}%`;
-        weekTransitions.push({fill,target});
-      }
+      if(previous!==target){fill.style.height=`${previous}%`;weekTransitions.push({fill,target});}
       weekState.set(index,target);
     });
 
     if(!taskTransitions.length && !weekTransitions.length) return;
     document.body.offsetHeight;
     requestAnimationFrame(() => {
-      taskTransitions.forEach(({el,fill,targetLit}) => {
-        el.classList.toggle('lit',targetLit);
-        fill.style.setProperty('--fill',targetLit?'100%':'6%');
-      });
+      taskTransitions.forEach(({el,fill,targetLit}) => {el.classList.toggle('lit',targetLit);fill.style.setProperty('--fill',targetLit?'100%':'6%');});
       weekTransitions.forEach(({fill,target}) => {fill.style.height=`${target}%`;});
     });
   }
 
-  window.render = function nurV2SmoothRender(){
-    captureExisting();
-    baseRender();
-    animateRebuiltProgress();
-  };
-
+  window.render = function nurV2SmoothRender(){captureExisting();baseRender();animateRebuiltProgress();};
   captureExisting();
 })();
