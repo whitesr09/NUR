@@ -1,0 +1,1 @@
+The final launcher source image is committed as a lossless PNG on the same branch via Git object API during finalization.
