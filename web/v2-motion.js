@@ -92,13 +92,19 @@
       const id=el.dataset.taskPillar;
       const targetLit=el.classList.contains('lit');
       const hadPrevious=taskState.has(id);
-      const previousLit=hadPrevious ? taskState.get(id) : false;
+      const previousLit=hadPrevious ? taskState.get(id) : targetLit;
       const fill=el.querySelector('.pillar-shell i');
       if(!fill) return;
 
-      el.classList.toggle('lit',previousLit);
-      fill.style.setProperty('--fill',previousLit?'100%':'6%');
-      taskTransitions.push({el,fill,targetLit});
+      /* Only replay the candle movement if THIS task changed. Unrelated renders
+         (Muhasaba, prayer, notes, money, history) leave Amanah visually still. */
+      if(hadPrevious && previousLit!==targetLit){
+        el.classList.toggle('lit',previousLit);
+        fill.style.setProperty('--fill',previousLit?'100%':'6%');
+        taskTransitions.push({el,fill,targetLit});
+      }else{
+        fill.style.setProperty('--fill',targetLit?'100%':'6%');
+      }
       taskState.set(id,targetLit);
     });
 
@@ -110,12 +116,15 @@
       const fill=col.querySelector('.week-fill');
       if(!fill)return;
       const target=parseFloat(fill.style.height)||0;
-      const previous=weekState.has(index)?weekState.get(index):0;
-      fill.style.height=`${previous}%`;
-      weekTransitions.push({fill,target});
+      const previous=weekState.has(index)?weekState.get(index):target;
+      if(previous!==target){
+        fill.style.height=`${previous}%`;
+        weekTransitions.push({fill,target});
+      }
       weekState.set(index,target);
     });
 
+    if(!taskTransitions.length && !weekTransitions.length) return;
     document.body.offsetHeight;
     requestAnimationFrame(() => {
       taskTransitions.forEach(({el,fill,targetLit}) => {
