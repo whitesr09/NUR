@@ -1,99 +1,174 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
-  <meta name="theme-color" content="#06101d" />
-  <meta name="description" content="NUR — a private dashboard for intentional Muslim living." />
-  <link rel="manifest" href="manifest.webmanifest" />
-  <link rel="icon" href="icon.svg" />
-  <link rel="apple-touch-icon" href="icon.svg" />
-  <link rel="stylesheet" href="styles.css?v=2" />
-  <title>NUR — Intentional Day</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#061225">
+  <meta name="description" content="NUR — intentional Muslim living, one day at a time.">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="icon.svg">
+  <link rel="stylesheet" href="styles.css">
+  <title>NUR</title>
 </head>
 <body>
-  <div class="ambient ambient-a" aria-hidden="true"></div>
-  <div class="ambient ambient-b" aria-hidden="true"></div>
-  <div class="noise" aria-hidden="true"></div>
+  <div class="page-pattern" aria-hidden="true"></div>
 
   <div id="splash" class="splash">
-    <div class="splash-mark gold-3d" lang="ar">نُور</div>
-    <div class="eyebrow">A PRIVATE PLACE TO RETURN TO WHAT MATTERS</div>
-    <h1>See the day.<br><em>Keep the intention.</em></h1>
-    <p>Salah, responsibilities, reflection, notes and money — gathered quietly in one place.</p>
-    <button id="enterApp" class="gold-btn">Enter the dashboard <span>→</span></button>
+    <div class="splash-brand">NUR</div>
+    <div class="splash-crescent">☾</div>
+    <p>Return to what matters.</p>
+    <button id="enterApp" class="gold-btn">Enter</button>
   </div>
 
   <main id="appShell" class="app-shell hidden">
-    <header class="topbar glass">
-      <div class="brand-wrap">
-        <div class="brand gold-3d" lang="ar">نُور</div>
-        <div class="brand-latin">NUR</div>
-        <div class="brand-sub">Worship · responsibility · reflection</div>
-      </div>
-      <nav class="desktop-nav" aria-label="Primary">
-        <button data-open="prayers">Prayers</button><button data-open="tasks">Tasks</button><button data-open="muhasaba">Muhasaba</button><button data-open="notes">Notes</button><button data-open="money">Money</button>
-      </nav>
-      <div class="day-label"><span>TODAY</span><strong id="todayLabel"></strong></div>
-    </header>
-
-    <section class="dashboard-grid">
-      <article class="panel glass prayers-panel reveal" style="--delay:.02s">
-        <div class="panel-head"><div><span class="eyebrow">SALAH</span><h2>Five prayers</h2></div><button class="link-btn" data-open="prayers">Open ↗</button></div>
-        <div id="prayerList" class="prayer-list"></div>
-        <div class="progress-row prayer-progress-row"><div class="thin-progress"><i id="prayerProgressBar"></i></div><small id="prayerCount"></small></div>
-      </article>
-
-      <article class="panel glass light-panel reveal" style="--delay:.07s">
-        <div class="light-topline"><span class="eyebrow center">DAILY LIGHT</span><span id="streakChip" class="streak-chip">0 day rhythm</span></div>
-        <div class="light-scene">
-          <div class="calligraphy-field" aria-hidden="true">
-            <span class="calli calli-a" lang="ar">الرَّحْمٰن</span><span class="calli calli-b" lang="ar">الرَّحِيم</span><span class="calli calli-c" lang="ar">السَّلَام</span><span class="calli calli-d" lang="ar">النُّور</span>
+    <section class="dashboard-frame">
+      <header class="hero-head">
+        <div class="brand-lockup">
+          <div class="brand">NUR</div>
+          <span class="brand-spark">✦</span>
+          <div class="date-stack">
+            <small id="weekdayLabel"></small>
+            <strong id="todayLabel"></strong>
           </div>
-          <div id="lightHalo" class="light-halo">
-            <div class="halo-ring ring-a"></div><div class="halo-ring ring-b"></div><div class="halo-ring ring-c"></div>
-            <div class="allah gold-3d-soft" lang="ar">الله</div>
+        </div>
+      </header>
+
+      <article class="panel light-panel">
+        <div class="ornament-arch" aria-hidden="true">
+          <div class="lattice"></div>
+          <div class="arch-line arch-line-a"></div>
+          <div class="arch-line arch-line-b"></div>
+        </div>
+
+        <span class="eyebrow center">DAILY LIGHT</span>
+        <span class="gold-dot">✦</span>
+
+        <div class="light-stage">
+          <div id="lightOrbit" class="light-orbit" style="--angle:0deg">
+            <div class="light-orbit-inner"></div>
+            <div id="lightBeam" class="light-beam"></div>
+            <div class="allah-word">الله</div>
             <div id="lightPercent" class="light-percent">0%</div>
           </div>
-          <div class="mihrab mihrab-left"></div><div class="mihrab mihrab-right"></div>
-          <div class="star star-a">✦</div><div class="star star-b">✧</div><div class="star star-c">✦</div>
         </div>
+
         <p id="lightCopy" class="light-copy">The scene brightens as the rhythm of your day fills.</p>
-        <div class="light-weights"><span>45% prayer</span><span>40% tasks</span><span>15% muhasaba</span></div>
+        <div id="lightWeights" class="light-weights"></div>
+
+        <svg class="mosque-silhouette" viewBox="0 0 1000 250" preserveAspectRatio="none" aria-hidden="true">
+          <defs>
+            <linearGradient id="gMosque" x1="0" x2="0" y1="0" y2="1">
+              <stop offset="0" stop-color="#19304d" stop-opacity=".7"/>
+              <stop offset="1" stop-color="#071221" stop-opacity=".96"/>
+            </linearGradient>
+          </defs>
+          <rect x="0" y="195" width="1000" height="55" fill="url(#gMosque)"/>
+          <g fill="url(#gMosque)" stroke="#b58b3c" stroke-opacity=".18">
+            <path d="M50 195h55v-75h10v-18h10v18h10v75z"/>
+            <path d="M865 195h55v-75h10v-18h10v18h10v75z"/>
+            <path d="M210 195h90v-53c0-34 45-55 45-55s45 21 45 55v53z"/>
+            <path d="M610 195h90v-53c0-34 45-55 45-55s45 21 45 55v53z"/>
+            <path d="M390 195h220v-65c0-42 55-68 110-68-40 12-68 34-68 68v65z" opacity=".55"/>
+            <path d="M365 195h270v-36c0-65 68-105 135-105-44 15-80 48-80 105v36z" opacity=".25"/>
+          </g>
+        </svg>
       </article>
 
-      <article class="panel glass tasks-panel reveal" style="--delay:.12s">
-        <div class="panel-head"><div><span class="eyebrow">AMANAH</span><h2>Today's tasks</h2></div><div class="metric"><strong id="taskCount">0 / 0</strong><button class="link-btn" data-open="tasks">Manage ↗</button></div></div>
+      <article class="panel prayers-panel">
+        <div class="panel-head">
+          <div>
+            <span class="eyebrow">SALAH</span>
+            <h2>Five prayers</h2>
+          </div>
+          <button class="link-btn" data-open="prayers"><span id="prayerCount">0 / 5</span> ↗</button>
+        </div>
+        <div id="prayerList" class="prayer-list"></div>
+        <div class="prayer-progress-zone">
+          <div class="thin-progress"><i id="prayerProgressBar"></i></div>
+        </div>
+      </article>
+
+      <article class="panel tasks-panel">
+        <div class="panel-head">
+          <div>
+            <span class="eyebrow">AMANAH</span>
+            <h2>Today’s tasks</h2>
+          </div>
+          <div class="metric">
+            <strong id="taskCount">0 / 0</strong>
+            <button class="link-btn" data-open="tasks">Manage ↗</button>
+          </div>
+        </div>
         <div id="taskPreview" class="preview-list empty-state"></div>
-        <div class="task-light-head"><span>Completion lights</span><small>Tap a task to light its pillar</small></div>
         <div id="taskPillars" class="task-pillars"></div>
       </article>
 
-      <article class="panel glass muhasaba-panel reveal" style="--delay:.17s">
-        <div class="panel-head"><div><span class="eyebrow">MUHASABA</span><h2>Self-accounting</h2></div><button class="link-btn" data-open="muhasaba"><span id="muhasabaCount">0 / 0</span> ↗</button></div>
-        <div class="donut-wrap"><div id="muhasabaDonut" class="donut"><span id="muhasabaPercent">0%</span></div><div id="muhasabaPreview" class="compact-list"></div></div>
+      <article class="panel muhasaba-panel">
+        <div class="panel-head">
+          <div>
+            <span class="eyebrow">MUHASABA</span>
+            <h2>Self-accounting</h2>
+          </div>
+          <button class="link-btn" data-open="muhasaba"><span id="muhasabaCount">0 / 0</span> ↗</button>
+        </div>
+        <div class="muhasaba-body">
+          <div id="muhasabaDonut" class="muhasaba-donut" style="--angle:0deg">
+            <div class="donut-hole"><span id="muhasabaPercent">0</span><small>%</small></div>
+          </div>
+          <div id="muhasabaPreview" class="compact-list"></div>
+        </div>
       </article>
 
-      <article class="panel glass rhythm-panel reveal" style="--delay:.22s">
-        <div class="panel-head"><div><span class="eyebrow">RHYTHM</span><h2>Seven days of light</h2></div><button class="link-btn" data-open="history">Day history ↗</button></div>
-        <div id="historySince" class="history-since"></div>
+      <article class="panel rhythm-panel">
+        <div class="panel-head">
+          <div>
+            <span class="eyebrow">RHYTHM</span>
+            <h2>Seven days of light</h2>
+          </div>
+          <button class="link-btn" data-open="history">History ↗</button>
+        </div>
         <div id="weekBars" class="week-bars"></div>
+        <p id="historySince" class="history-since"></p>
       </article>
 
-      <article class="panel glass archive-panel reveal" style="--delay:.27s">
-        <div class="panel-head"><div><span class="eyebrow">NOTES & MONEY</span><h2>Quiet archive</h2></div></div>
-        <button class="archive-note glass-inner" data-open="notes"><span>✦ Latest note</span><strong id="latestNoteTitle">No note for this day yet.</strong><small id="latestNoteBody">Keep one thought you want to carry forward.</small></button>
-        <button class="money-mini glass-inner" data-open="money"><span><small>Balance</small><strong id="balancePreview">₹0</strong></span><span><small>Charity</small><strong id="charityPreview">₹0</strong></span></button>
+      <article class="panel archive-panel">
+        <div class="panel-head">
+          <div>
+            <span class="eyebrow">NOTES & MONEY</span>
+            <h2>Quiet archive</h2>
+          </div>
+        </div>
+        <button class="archive-row" data-open="notes">
+          <span class="archive-icon">“</span>
+          <span class="archive-copy">
+            <small>Latest note</small>
+            <strong id="latestNoteTitle">No note for this day yet.</strong>
+            <em id="latestNoteBody">Keep one thought you want to carry forward.</em>
+          </span>
+        </button>
+        <button class="archive-row" data-open="money">
+          <span class="archive-icon">₹</span>
+          <span class="archive-copy">
+            <small>Balance</small>
+            <strong id="balancePreview">₹0</strong>
+            <em>Charity · <span id="charityPreview">₹0</span></em>
+          </span>
+        </button>
       </article>
+
+      <footer class="frame-foot"><span>✦</span> Mark a prayer, complete a task, or open any card.</footer>
     </section>
-
-    <nav class="mobile-nav glass" aria-label="Mobile primary">
-      <button data-open="prayers"><span>◉</span><small>Salah</small></button><button data-open="tasks"><span>✓</span><small>Tasks</small></button><button data-open="muhasaba"><span>◌</span><small>Reflect</small></button><button data-open="notes"><span>✦</span><small>Notes</small></button><button data-open="money"><span>₹</span><small>Money</small></button>
-    </nav>
   </main>
 
-  <div id="modalRoot" class="modal-root hidden" aria-hidden="true"><div class="modal-backdrop" data-close></div><section class="modal-card glass" role="dialog" aria-modal="true"><button class="modal-close" data-close aria-label="Close">×</button><div id="modalContent"></div></section></div>
-  <div id="toast" class="toast hidden" role="status" aria-live="polite"></div>
-  <script src="app.js?v=2" defer></script>
+  <div id="modalRoot" class="modal-root hidden" aria-hidden="true">
+    <div class="modal-backdrop" data-close></div>
+    <section class="modal-card" role="dialog" aria-modal="true">
+      <button class="modal-close" data-close aria-label="Close">×</button>
+      <div id="modalContent"></div>
+    </section>
+  </div>
+
+  <div id="toast" class="toast hidden"></div>
+  <script src="app.js" defer></script>
 </body>
 </html>
