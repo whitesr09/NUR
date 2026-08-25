@@ -46,8 +46,11 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Install image tooling
-        run: python3 -m pip install --quiet pillow
+      - name: Install SVG renderer
+        shell: bash
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y --no-install-recommends librsvg2-bin
 
       - name: Create Android project
         run: npx cap add android
@@ -55,32 +58,22 @@ jobs:
       - name: Sync web app
         run: npx cap sync android
 
-      - name: Apply crisp NUR launcher icon
+      - name: Apply SVG NUR launcher icon
         shell: bash
         run: |
-          file android-icon/nur-app-icon.png
-          test -s android-icon/nur-app-icon.png
-          python3 - <<'PY'
-          from PIL import Image
-          from pathlib import Path
-          src=Image.open('android-icon/nur-app-icon.png').convert('RGBA')
-          src.load()
-          sizes={'mdpi':48,'hdpi':72,'xhdpi':96,'xxhdpi':144,'xxxhdpi':192}
-          root=Path('android/app/src/main/res')
-          for density,size in sizes.items():
-              dest=root/f'mipmap-{density}'
-              dest.mkdir(parents=True,exist_ok=True)
-              for old in ['ic_launcher.webp','ic_launcher_round.webp','ic_launcher.jpg','ic_launcher_round.jpg','ic_launcher.png','ic_launcher_round.png']:
-                  q=dest/old
-                  if q.exists(): q.unlink()
-              icon=src.resize((size,size),Image.Resampling.LANCZOS)
-              icon.save(dest/'ic_launcher.png',format='PNG',optimize=True)
-              icon.save(dest/'ic_launcher_round.png',format='PNG',optimize=True)
-          for name in ['mipmap-anydpi-v26/ic_launcher.xml','mipmap-anydpi-v26/ic_launcher_round.xml']:
-              q=root/name
-              if q.exists(): q.unlink()
-          print('Generated launcher densities from lossless PNG:',src.size)
-          PY
+          test -s android-icon/nur-app-icon.svg
+          ROOT="android/app/src/main/res"
+          for spec in mdpi:48 hdpi:72 xhdpi:96 xxhdpi:144 xxxhdpi:192; do
+            density="${spec%%:*}"
+            size="${spec##*:}"
+            DEST="$ROOT/mipmap-$density"
+            mkdir -p "$DEST"
+            rm -f "$DEST/ic_launcher.webp" "$DEST/ic_launcher_round.webp" "$DEST/ic_launcher.jpg" "$DEST/ic_launcher_round.jpg" "$DEST/ic_launcher.png" "$DEST/ic_launcher_round.png"
+            rsvg-convert -w "$size" -h "$size" android-icon/nur-app-icon.svg -o "$DEST/ic_launcher.png"
+            cp "$DEST/ic_launcher.png" "$DEST/ic_launcher_round.png"
+          done
+          rm -f "$ROOT/mipmap-anydpi-v26/ic_launcher.xml" "$ROOT/mipmap-anydpi-v26/ic_launcher_round.xml"
+          file "$ROOT/mipmap-xxxhdpi/ic_launcher.png"
 
       - name: Remove native white launch flash
         shell: bash
