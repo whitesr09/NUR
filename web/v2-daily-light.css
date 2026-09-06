@@ -1,44 +1,90 @@
 /* NUR V2 — Daily Light visual rebuild only. Uses the user-uploaded architectural image. */
 .light-panel{
-  min-height:520px!important;
-  padding:24px 14px 20px!important;
+  min-height:540px!important;
+  padding:24px 14px 22px!important;
   border-color:#80653d99!important;
   background:
-    linear-gradient(180deg,rgba(2,8,23,.30) 0%,rgba(2,8,23,.46) 45%,rgba(2,8,23,.76) 100%),
+    linear-gradient(180deg,rgba(2,8,23,.24) 0%,rgba(2,8,23,.38) 44%,rgba(2,8,23,.72) 100%),
     url('assets/daily-light-bg.jpg') center 48%/cover no-repeat!important;
   isolation:isolate;
   box-shadow:inset 0 1px rgba(255,226,154,.08),0 20px 50px #0005!important;
 }
 .light-panel::before{
   content:"";position:absolute;inset:0;z-index:0;pointer-events:none;
-  background:radial-gradient(circle at 50% 43%,rgba(3,12,28,.04) 0 22%,rgba(2,8,23,.20) 55%,rgba(1,5,14,.55) 100%);
+  background:radial-gradient(circle at 50% 42%,rgba(4,14,31,.02) 0 24%,rgba(2,8,23,.14) 58%,rgba(1,5,14,.50) 100%);
 }
-.light-panel>.eyebrow,.light-panel>.gold-dot,.light-panel>.light-stage,.light-panel>.light-copy,.light-panel>.light-weights{position:relative;z-index:2}
-.light-panel>.eyebrow{color:#d7b875!important;text-shadow:0 2px 7px #000;letter-spacing:.38em!important}
-.light-panel>.gold-dot{margin-top:9px!important;color:#ffd36b!important;text-shadow:0 0 12px #e5ad43}
-/* The uploaded architecture replaces the old generated arch and mosque artwork. */
+.light-panel>.eyebrow,.light-panel>.gold-dot,.light-panel>.light-stage,.light-panel>.light-copy,.light-panel>.light-verse-source,.light-panel>.light-weights{position:relative;z-index:2}
+.light-panel>.eyebrow{color:#f0c665!important;text-shadow:0 0 10px rgba(242,190,72,.30),0 2px 7px #000;letter-spacing:.38em!important}
+.light-panel>.gold-dot{margin-top:9px!important;color:#ffd765!important;text-shadow:0 0 14px rgba(255,202,84,.72)}
 .light-panel .ornament-arch,.light-panel .mosque-silhouette{display:none!important}
-.light-stage{height:300px!important;margin-top:0!important}
-.light-stage:before,.light-stage:after{opacity:.32!important;border-color:rgba(255,215,125,.18)!important}
-.light-stage:before{width:252px!important;height:252px!important}
-.light-stage:after{width:218px!important;height:218px!important}
+
+.light-stage{height:314px!important;margin-top:0!important}
+.light-stage:before,.light-stage:after{display:none!important}
+
 .light-orbit{
-  width:198px!important;height:198px!important;
-  box-shadow:0 0 0 10px rgba(9,18,34,.78),0 0 0 22px rgba(5,13,29,.62),0 0 34px rgba(230,173,66,.11)!important;
+  --outer-angle:var(--angle);
+  width:226px!important;height:226px!important;
+  position:relative!important;display:grid!important;place-items:center!important;
+  border-radius:50%!important;background:transparent!important;
+  box-shadow:none!important;overflow:visible!important;
 }
-.light-orbit-inner{background:rgba(5,15,29,.86)!important;backdrop-filter:blur(1.5px);-webkit-backdrop-filter:blur(1.5px);border-color:#8a6d3c!important}
-.light-beam{opacity:.88!important}
-.allah-word{font-size:48px!important;color:#ffd987!important;text-shadow:0 0 18px rgba(226,169,64,.28),0 2px 8px #000!important}
-.light-percent{top:132px!important;font-size:14px!important;color:#d1c0a3!important;text-shadow:0 2px 5px #000}
-.light-copy{max-width:480px!important;margin:1px auto 10px!important;color:#ddd4c5!important;font-size:13px!important;text-shadow:0 2px 7px #000;}
-.light-weights{gap:6px!important;margin-bottom:2px}
-.light-weights span{padding:5px 9px!important;font-size:7px!important;color:#c7bca8!important;border-color:rgba(205,166,91,.30)!important;background:rgba(3,11,25,.70)!important;box-shadow:0 2px 10px #0004;backdrop-filter:blur(3px);-webkit-backdrop-filter:blur(3px)}
+/* thin outer progress ring */
+.light-orbit::before{
+  content:"";position:absolute;inset:0;border-radius:50%;pointer-events:none;
+  background:conic-gradient(from 270deg,#ffe17a 0 var(--outer-angle),rgba(80,67,44,.28) var(--outer-angle) 360deg);
+  -webkit-mask:radial-gradient(farthest-side,transparent calc(100% - 4px),#000 calc(100% - 3px));
+  mask:radial-gradient(farthest-side,transparent calc(100% - 4px),#000 calc(100% - 3px));
+  filter:drop-shadow(0 0 6px rgba(255,207,86,.62));
+}
+/* transparent gap between outer and inner rings */
+.light-beam{
+  position:absolute!important;inset:22px!important;border-radius:50%!important;
+  background:conic-gradient(from 270deg,#ffe778 0 var(--angle),#f0ae31 52%,#ffd561 var(--angle),rgba(34,42,60,.48) var(--angle) 360deg)!important;
+  -webkit-mask:radial-gradient(farthest-side,transparent calc(100% - 20px),#000 calc(100% - 19px));
+  mask:radial-gradient(farthest-side,transparent calc(100% - 20px),#000 calc(100% - 19px));
+  mix-blend-mode:normal!important;opacity:1!important;
+  filter:drop-shadow(0 0 9px rgba(255,190,58,.55));
+}
+/* inner field is intentionally transparent so the architecture remains visible */
+.light-orbit-inner{
+  position:absolute!important;inset:48px!important;border-radius:50%!important;
+  background:transparent!important;border:1px solid rgba(231,191,105,.42)!important;
+  box-shadow:inset 0 0 22px rgba(2,8,23,.18)!important;
+  backdrop-filter:none!important;-webkit-backdrop-filter:none!important;
+}
+.orbit-star{position:absolute;z-index:5;color:#ffdb6b;font-size:11px;line-height:1;text-shadow:0 0 8px #f5b63d,0 0 15px rgba(255,190,60,.55)}
+.orbit-star-top{top:-4px;left:50%;transform:translateX(-50%)}
+.orbit-star-right{right:-4px;top:50%;transform:translateY(-50%)}
+.orbit-star-bottom{bottom:-4px;left:50%;transform:translateX(-50%)}
+.orbit-star-left{left:-4px;top:50%;transform:translateY(-50%)}
+.allah-word{
+  z-index:6!important;font-size:56px!important;font-weight:800!important;color:#ffe88f!important;
+  font-family:"Noto Naskh Arabic","Traditional Arabic",serif!important;
+  text-shadow:0 0 8px rgba(255,226,143,.78),0 0 18px rgba(241,177,48,.68),0 2px 8px #000!important;
+  transform:translateY(-9px)
+}
+.light-percent{z-index:6!important;top:145px!important;font-size:15px!important;color:#f0dfbd!important;text-shadow:0 0 8px rgba(255,208,91,.20),0 2px 5px #000}
+
+.light-copy{
+  max-width:500px!important;margin:0 auto 4px!important;padding:0 10px!important;
+  color:#efe6d7!important;font:italic 13.5px/1.55 Georgia,"Times New Roman",serif!important;
+  text-align:center;text-shadow:0 2px 7px #000;transition:opacity .24s ease,transform .24s ease;
+}
+.light-copy.is-changing,.light-verse-source.is-changing{opacity:0;transform:translateY(4px)}
+.light-verse-source{
+  text-align:center;margin:0 auto 10px;color:#caa85f;font-size:7.5px;letter-spacing:.16em;text-transform:uppercase;
+  text-shadow:0 2px 5px #000;transition:opacity .24s ease,transform .24s ease;
+}
+.light-weights{gap:6px!important;margin:0 auto 2px!important;align-items:center}
+.light-weights span{padding:6px 10px!important;font-size:7px!important;color:#d8cbb4!important;border-color:rgba(221,178,93,.36)!important;background:rgba(3,11,25,.62)!important;box-shadow:0 2px 10px #0004;backdrop-filter:blur(3px);-webkit-backdrop-filter:blur(3px)}
+
 @media(max-width:430px){
-  .light-panel{min-height:500px!important;padding:22px 10px 18px!important;background-position:center 48%!important}
-  .light-stage{height:286px!important}
-  .light-stage:before{width:238px!important;height:238px!important}
-  .light-stage:after{width:206px!important;height:206px!important}
-  .light-orbit{width:188px!important;height:188px!important;box-shadow:0 0 0 9px rgba(9,18,34,.78),0 0 0 20px rgba(5,13,29,.62),0 0 30px rgba(230,173,66,.10)!important}
-  .allah-word{font-size:45px!important}
-  .light-percent{top:126px!important}
+  .light-panel{min-height:520px!important;padding:22px 10px 20px!important;background-position:center 48%!important}
+  .light-stage{height:300px!important}
+  .light-orbit{width:214px!important;height:214px!important}
+  .light-beam{inset:21px!important}
+  .light-orbit-inner{inset:46px!important}
+  .allah-word{font-size:53px!important;transform:translateY(-8px)}
+  .light-percent{top:138px!important}
+  .light-copy{font-size:13px!important;line-height:1.5!important}
 }
