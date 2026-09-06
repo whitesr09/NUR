@@ -75,19 +75,19 @@ jobs:
             convert "$ICON" -filter Lanczos -resize "${size}x${size}" -strip "$DEST/ic_launcher.png"
             cp "$DEST/ic_launcher.png" "$DEST/ic_launcher_round.png"
           done
-          # Disable Capacitor adaptive-icon XML so Android cannot fall back to old/generated artwork.
           rm -f "$ROOT/mipmap-anydpi-v26/ic_launcher.xml" "$ROOT/mipmap-anydpi-v26/ic_launcher_round.xml"
           identify "$ROOT/mipmap-xxxhdpi/ic_launcher.png"
 
-      - name: Remove native white launch flash
+      - name: Eliminate native white launch flash
         shell: bash
         run: |
+          set -euo pipefail
           ROOT="android/app/src/main/res"
           mkdir -p "$ROOT/drawable" "$ROOT/values-v31"
           cat > "$ROOT/drawable/nur_launch_background.xml" <<'XML'
           <?xml version="1.0" encoding="utf-8"?>
           <shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="rectangle">
-              <solid android:color="#020817" />
+              <solid android:color="#030207" />
           </shape>
           XML
           cat > "$ROOT/drawable/nur_transparent.xml" <<'XML'
@@ -100,23 +100,39 @@ jobs:
           from pathlib import Path
           import re
           p=Path('android/app/src/main/res/values/styles.xml')
-          s=p.read_text().replace('@drawable/splash','@drawable/nur_launch_background')
-          m=re.search(r'(<style name="AppTheme\.NoActionBarLaunch"[^>]*>)(.*?)(</style>)',s,re.S)
-          if m:
+          s=p.read_text()
+          s=s.replace('@drawable/splash','@drawable/nur_launch_background')
+          for name in ('AppTheme','AppTheme.NoActionBar','AppTheme.NoActionBarLaunch'):
+              pat=rf'(<style name="{re.escape(name)}"[^>]*>)(.*?)(</style>)'
+              m=re.search(pat,s,re.S)
+              if not m:
+                  continue
               body=m.group(2)
-              if 'android:windowBackground' not in body:
-                  body+='\n        <item name="android:windowBackground">@drawable/nur_launch_background</item>\n'
-              s=s[:m.start()]+m.group(1)+body+m.group(3)+s[m.end():]
+              items={
+                  'android:windowBackground':'@drawable/nur_launch_background',
+                  'android:statusBarColor':'#030207',
+                  'android:navigationBarColor':'#030207'
+              }
+              for key,val in items.items():
+                  item_pat=rf'<item name="{re.escape(key)}">.*?</item>'
+                  replacement=f'<item name="{key}">{val}</item>'
+                  if re.search(item_pat,body,re.S):
+                      body=re.sub(item_pat,replacement,body,flags=re.S)
+                  else:
+                      body+='\n        '+replacement
+              s=s[:m.start()]+m.group(1)+body+'\n    '+m.group(3)+s[m.end():]
           p.write_text(s)
           PY
           cat > "$ROOT/values-v31/styles.xml" <<'XML'
           <?xml version="1.0" encoding="utf-8"?>
           <resources>
               <style name="AppTheme.NoActionBarLaunch" parent="Theme.SplashScreen">
-                  <item name="windowSplashScreenBackground">#020817</item>
+                  <item name="windowSplashScreenBackground">#030207</item>
                   <item name="windowSplashScreenAnimatedIcon">@drawable/nur_transparent</item>
                   <item name="postSplashScreenTheme">@style/AppTheme.NoActionBar</item>
                   <item name="android:windowBackground">@drawable/nur_launch_background</item>
+                  <item name="android:statusBarColor">#030207</item>
+                  <item name="android:navigationBarColor">#030207</item>
               </style>
           </resources>
           XML
