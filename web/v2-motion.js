@@ -13,15 +13,46 @@
     {text:'Indeed, with hardship comes ease.',source:'Qur’an 94:6'},
     {text:'Remember Me; I will remember you.',source:'Qur’an 2:152'},
     {text:'Allah does not burden a soul beyond what it can bear.',source:'Qur’an 2:286'},
-    {text:'And whoever relies upon Allah — then He is sufficient for him.',source:'Qur’an 65:3'},
+    {text:'Whoever relies upon Allah — He is sufficient for him.',source:'Qur’an 65:3'},
     {text:'Surely in the remembrance of Allah do hearts find comfort.',source:'Qur’an 13:28'},
-    {text:'So be patient. Indeed, the promise of Allah is truth.',source:'Qur’an 30:60'},
-    {text:'The deeds most beloved to Allah are those done consistently, even if small.',source:'Sahih al-Bukhari & Muslim'},
-    {text:'Allah is gentle and loves gentleness in all matters.',source:'Sahih al-Bukhari & Muslim'}
+    {text:'Be patient. Indeed, the promise of Allah is true.',source:'Qur’an 30:60'},
+    {text:'Indeed, Allah is with the patient.',source:'Qur’an 2:153'},
+    {text:'Do not despair of the mercy of Allah.',source:'Qur’an 39:53'},
+    {text:'My mercy encompasses all things.',source:'Qur’an 7:156'},
+    {text:'Call upon Me; I will respond to you.',source:'Qur’an 40:60'},
+    {text:'Allah loves those who trust in Him.',source:'Qur’an 3:159'},
+    {text:'Indeed, Allah loves those who do good.',source:'Qur’an 2:195'},
+    {text:'The most beloved deeds to Allah are those done consistently, even if small.',source:'Sahih al-Bukhari & Sahih Muslim'},
+    {text:'Allah is gentle and loves gentleness in all matters.',source:'Sahih al-Bukhari & Sahih Muslim'},
+    {text:'Whoever believes in Allah and the Last Day should speak good or remain silent.',source:'Sahih al-Bukhari & Sahih Muslim'},
+    {text:'The strong believer is better and more beloved to Allah than the weak believer, while there is good in both.',source:'Sahih Muslim'},
+    {text:'Allah does not look at your forms or wealth, but at your hearts and deeds.',source:'Sahih Muslim'},
+    {text:'A good word is charity.',source:'Sahih al-Bukhari & Sahih Muslim'}
   ];
 
+  let verseIndex=Math.floor(Math.random()*quotes.length);
+  function paintDailyVerse(withFade=false){
+    const text=document.querySelector('#lightCopy');
+    const source=document.querySelector('#lightVerseSource');
+    if(!text || !source) return;
+    const apply=()=>{
+      const q=quotes[verseIndex%quotes.length];
+      text.textContent=`“${q.text}”`;
+      source.textContent=q.source;
+      text.classList.remove('is-changing');
+      source.classList.remove('is-changing');
+    };
+    if(withFade){
+      text.classList.add('is-changing');source.classList.add('is-changing');
+      setTimeout(apply,220);
+    }else apply();
+  }
+  function advanceDailyVerse(){
+    verseIndex=(verseIndex+1)%quotes.length;
+    paintDailyVerse(true);
+  }
+
   function prepareLoadingCopy(){
-    /* Keep the title outside the progress ring and in Arabic. */
     if(caption) caption.textContent='نُور';
     if(!splash) return;
     let bottom=splash.querySelector('.loading-bottom');
@@ -64,12 +95,14 @@
       setTimeout(()=>{
         enter.click();
         document.documentElement.classList.add('nur-loader-done');
+        paintDailyVerse(false);
       },300);
     }
     requestAnimationFrame(frame);
   }
 
   requestAnimationFrame(startNurLoader);
+  setInterval(advanceDailyVerse,10000);
 
   const baseRender = window.render;
   if (typeof baseRender !== 'function') return;
@@ -137,8 +170,10 @@
   window.render = function nurV2SmoothRender(){
     captureExisting();
     baseRender();
+    paintDailyVerse(false);
     animateRebuiltProgress();
   };
 
   captureExisting();
+  paintDailyVerse(false);
 })();
