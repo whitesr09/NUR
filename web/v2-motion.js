@@ -22,12 +22,32 @@
     {text:'Call upon Me; I will respond to you.',source:'Qur’an 40:60'},
     {text:'Allah loves those who trust in Him.',source:'Qur’an 3:159'},
     {text:'Indeed, Allah loves those who do good.',source:'Qur’an 2:195'},
+    {text:'And whoever fears Allah — He will make for him a way out.',source:'Qur’an 65:2'},
+    {text:'And He will provide for him from where he does not expect.',source:'Qur’an 65:3'},
+    {text:'Indeed, prayer prohibits immorality and wrongdoing.',source:'Qur’an 29:45'},
+    {text:'So remember the name of your Lord and devote yourself to Him completely.',source:'Qur’an 73:8'},
+    {text:'And seek help through patience and prayer.',source:'Qur’an 2:45'},
+    {text:'Indeed, good deeds do away with misdeeds.',source:'Qur’an 11:114'},
+    {text:'And your Lord is going to give you, and you will be satisfied.',source:'Qur’an 93:5'},
+    {text:'The Hereafter is better for you than the first life.',source:'Qur’an 93:4'},
+    {text:'Indeed, Allah is near.',source:'Qur’an 2:186'},
+    {text:'And whoever is grateful — his gratitude is only for the benefit of himself.',source:'Qur’an 31:12'},
+    {text:'Do not lose hope nor be sad.',source:'Qur’an 3:139'},
     {text:'The most beloved deeds to Allah are those done consistently, even if small.',source:'Sahih al-Bukhari & Sahih Muslim'},
     {text:'Allah is gentle and loves gentleness in all matters.',source:'Sahih al-Bukhari & Sahih Muslim'},
     {text:'Whoever believes in Allah and the Last Day should speak good or remain silent.',source:'Sahih al-Bukhari & Sahih Muslim'},
     {text:'The strong believer is better and more beloved to Allah than the weak believer, while there is good in both.',source:'Sahih Muslim'},
     {text:'Allah does not look at your forms or wealth, but at your hearts and deeds.',source:'Sahih Muslim'},
-    {text:'A good word is charity.',source:'Sahih al-Bukhari & Sahih Muslim'}
+    {text:'A good word is charity.',source:'Sahih al-Bukhari & Sahih Muslim'},
+    {text:'Purity is half of faith.',source:'Sahih Muslim'},
+    {text:'The Muslim is the one from whose tongue and hand the Muslims are safe.',source:'Sahih al-Bukhari & Sahih Muslim'},
+    {text:'Whoever follows a path in pursuit of knowledge, Allah will make easy for him a path to Paradise.',source:'Sahih Muslim'},
+    {text:'Allah helps the servant as long as the servant helps his brother.',source:'Sahih Muslim'},
+    {text:'None of you truly believes until he loves for his brother what he loves for himself.',source:'Sahih al-Bukhari & Sahih Muslim'},
+    {text:'The best of you are those who are best in character.',source:'Sahih al-Bukhari'},
+    {text:'Modesty is a branch of faith.',source:'Sahih al-Bukhari & Sahih Muslim'},
+    {text:'Whoever is not merciful will not be shown mercy.',source:'Sahih al-Bukhari & Sahih Muslim'},
+    {text:'Smiling in the face of your brother is charity.',source:'Jami‘ at-Tirmidhi — Hasan'}
   ];
 
   let verseIndex=Math.floor(Math.random()*quotes.length);
