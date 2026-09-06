@@ -1,0 +1,44 @@
+/* NUR V2 — Daily Light visual rebuild only. Uses the user-uploaded architectural image. */
+.light-panel{
+  min-height:520px!important;
+  padding:24px 14px 20px!important;
+  border-color:#80653d99!important;
+  background:
+    linear-gradient(180deg,rgba(2,8,23,.30) 0%,rgba(2,8,23,.46) 45%,rgba(2,8,23,.76) 100%),
+    url('assets/daily-light-bg.jpg') center 48%/cover no-repeat!important;
+  isolation:isolate;
+  box-shadow:inset 0 1px rgba(255,226,154,.08),0 20px 50px #0005!important;
+}
+.light-panel::before{
+  content:"";position:absolute;inset:0;z-index:0;pointer-events:none;
+  background:radial-gradient(circle at 50% 43%,rgba(3,12,28,.04) 0 22%,rgba(2,8,23,.20) 55%,rgba(1,5,14,.55) 100%);
+}
+.light-panel>.eyebrow,.light-panel>.gold-dot,.light-panel>.light-stage,.light-panel>.light-copy,.light-panel>.light-weights{position:relative;z-index:2}
+.light-panel>.eyebrow{color:#d7b875!important;text-shadow:0 2px 7px #000;letter-spacing:.38em!important}
+.light-panel>.gold-dot{margin-top:9px!important;color:#ffd36b!important;text-shadow:0 0 12px #e5ad43}
+/* The uploaded architecture replaces the old generated arch and mosque artwork. */
+.light-panel .ornament-arch,.light-panel .mosque-silhouette{display:none!important}
+.light-stage{height:300px!important;margin-top:0!important}
+.light-stage:before,.light-stage:after{opacity:.32!important;border-color:rgba(255,215,125,.18)!important}
+.light-stage:before{width:252px!important;height:252px!important}
+.light-stage:after{width:218px!important;height:218px!important}
+.light-orbit{
+  width:198px!important;height:198px!important;
+  box-shadow:0 0 0 10px rgba(9,18,34,.78),0 0 0 22px rgba(5,13,29,.62),0 0 34px rgba(230,173,66,.11)!important;
+}
+.light-orbit-inner{background:rgba(5,15,29,.86)!important;backdrop-filter:blur(1.5px);-webkit-backdrop-filter:blur(1.5px);border-color:#8a6d3c!important}
+.light-beam{opacity:.88!important}
+.allah-word{font-size:48px!important;color:#ffd987!important;text-shadow:0 0 18px rgba(226,169,64,.28),0 2px 8px #000!important}
+.light-percent{top:132px!important;font-size:14px!important;color:#d1c0a3!important;text-shadow:0 2px 5px #000}
+.light-copy{max-width:480px!important;margin:1px auto 10px!important;color:#ddd4c5!important;font-size:13px!important;text-shadow:0 2px 7px #000;}
+.light-weights{gap:6px!important;margin-bottom:2px}
+.light-weights span{padding:5px 9px!important;font-size:7px!important;color:#c7bca8!important;border-color:rgba(205,166,91,.30)!important;background:rgba(3,11,25,.70)!important;box-shadow:0 2px 10px #0004;backdrop-filter:blur(3px);-webkit-backdrop-filter:blur(3px)}
+@media(max-width:430px){
+  .light-panel{min-height:500px!important;padding:22px 10px 18px!important;background-position:center 48%!important}
+  .light-stage{height:286px!important}
+  .light-stage:before{width:238px!important;height:238px!important}
+  .light-stage:after{width:206px!important;height:206px!important}
+  .light-orbit{width:188px!important;height:188px!important;box-shadow:0 0 0 9px rgba(9,18,34,.78),0 0 0 20px rgba(5,13,29,.62),0 0 30px rgba(230,173,66,.10)!important}
+  .allah-word{font-size:45px!important}
+  .light-percent{top:126px!important}
+}
