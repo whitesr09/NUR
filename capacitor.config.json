@@ -3,5 +3,14 @@
   "appName":"NUR",
   "webDir":"web",
   "server":{"androidScheme":"https"},
-  "android":{"allowMixedContent":false}
+  "android":{"allowMixedContent":false,"backgroundColor":"#030207"},
+  "plugins":{
+    "SplashScreen":{
+      "launchShowDuration":0,
+      "launchAutoHide":true,
+      "backgroundColor":"#030207",
+      "androidScaleType":"CENTER_CROP",
+      "showSpinner":false
+    }
+  }
 }
