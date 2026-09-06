@@ -3,9 +3,9 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-  <meta name="theme-color" content="#020817">
+  <meta name="theme-color" content="#030207">
   <meta name="description" content="NUR — intentional Muslim living, one day at a time.">
-  <style>html,body{margin:0;background:#020817}#splash{position:fixed;inset:0;background:#020817;z-index:9999}</style>
+  <style>html,body{margin:0;background:#030207}#splash{position:fixed;inset:0;background:#030207;z-index:9999}</style>
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="icon" href="icon.svg">
   <link rel="stylesheet" href="styles.css">
@@ -23,14 +23,16 @@
     <div class="loading-shade" aria-hidden="true"></div>
     <div class="loading-caption" lang="ar" dir="rtl">نُور</div>
     <div class="loading-center">
-      <div class="loading-ring-wrap">
-        <svg class="loading-ring" viewBox="0 0 120 120" aria-hidden="true">
-          <circle class="loading-track" cx="60" cy="60" r="52"></circle>
-          <circle id="loadingArc" class="loading-arc" cx="60" cy="60" r="52"></circle>
-        </svg>
-        <div class="loading-allah">الله</div>
+      <div id="loadingOrbit" class="loading-orbit" style="--load-angle:0deg">
+        <span class="loading-orbit-star loading-orbit-star-top">✦</span>
+        <span class="loading-orbit-star loading-orbit-star-right">✦</span>
+        <span class="loading-orbit-star loading-orbit-star-bottom">✦</span>
+        <span class="loading-orbit-star loading-orbit-star-left">✦</span>
+        <div class="loading-inner-progress" aria-hidden="true"></div>
+        <div class="loading-inner-field" aria-hidden="true"></div>
+        <div class="loading-allah" lang="ar" dir="rtl">الله</div>
+        <div id="loadingPercent" class="loading-percent">0%</div>
       </div>
-      <div id="loadingPercent" class="loading-percent">0%</div>
     </div>
     <button id="enterApp" class="hidden" tabindex="-1" aria-hidden="true">Enter</button>
   </div>
