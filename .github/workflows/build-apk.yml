@@ -46,11 +46,11 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Install SVG renderer
+      - name: Install image tools
         shell: bash
         run: |
           sudo apt-get update -qq
-          sudo apt-get install -y --no-install-recommends librsvg2-bin
+          sudo apt-get install -y --no-install-recommends imagemagick
 
       - name: Create Android project
         run: npx cap add android
@@ -58,10 +58,13 @@ jobs:
       - name: Sync web app
         run: npx cap sync android
 
-      - name: Apply SVG NUR launcher icon
+      - name: Apply uploaded high-resolution NUR launcher icon
         shell: bash
         run: |
-          test -s android-icon/nur-app-icon.svg
+          set -euo pipefail
+          ICON="android-icon/nur-app-icon.png"
+          test -s "$ICON"
+          identify "$ICON"
           ROOT="android/app/src/main/res"
           for spec in mdpi:48 hdpi:72 xhdpi:96 xxhdpi:144 xxxhdpi:192; do
             density="${spec%%:*}"
@@ -69,11 +72,12 @@ jobs:
             DEST="$ROOT/mipmap-$density"
             mkdir -p "$DEST"
             rm -f "$DEST/ic_launcher.webp" "$DEST/ic_launcher_round.webp" "$DEST/ic_launcher.jpg" "$DEST/ic_launcher_round.jpg" "$DEST/ic_launcher.png" "$DEST/ic_launcher_round.png"
-            rsvg-convert -w "$size" -h "$size" android-icon/nur-app-icon.svg -o "$DEST/ic_launcher.png"
+            convert "$ICON" -filter Lanczos -resize "${size}x${size}" -strip "$DEST/ic_launcher.png"
             cp "$DEST/ic_launcher.png" "$DEST/ic_launcher_round.png"
           done
+          # Disable Capacitor adaptive-icon XML so Android cannot fall back to old/generated artwork.
           rm -f "$ROOT/mipmap-anydpi-v26/ic_launcher.xml" "$ROOT/mipmap-anydpi-v26/ic_launcher_round.xml"
-          file "$ROOT/mipmap-xxxhdpi/ic_launcher.png"
+          identify "$ROOT/mipmap-xxxhdpi/ic_launcher.png"
 
       - name: Remove native white launch flash
         shell: bash
