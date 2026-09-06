@@ -28,42 +28,42 @@
   border-radius:50%!important;background:transparent!important;
   box-shadow:none!important;overflow:visible!important;
 }
-/* thin outer progress ring */
+/* outer ring: slightly thicker, starts from 12 o'clock and follows the exact same angle */
 .light-orbit::before{
   content:"";position:absolute;inset:0;border-radius:50%;pointer-events:none;
-  background:conic-gradient(from 270deg,#ffe17a 0 var(--outer-angle),rgba(80,67,44,.28) var(--outer-angle) 360deg);
-  -webkit-mask:radial-gradient(farthest-side,transparent calc(100% - 4px),#000 calc(100% - 3px));
-  mask:radial-gradient(farthest-side,transparent calc(100% - 4px),#000 calc(100% - 3px));
-  filter:drop-shadow(0 0 6px rgba(255,207,86,.62));
+  background:conic-gradient(from 270deg,#fff09a 0 var(--outer-angle),rgba(88,70,38,.38) var(--outer-angle) 360deg);
+  -webkit-mask:radial-gradient(farthest-side,transparent calc(100% - 6px),#000 calc(100% - 5px));
+  mask:radial-gradient(farthest-side,transparent calc(100% - 6px),#000 calc(100% - 5px));
+  filter:drop-shadow(0 0 7px rgba(255,211,90,.72));
 }
-/* transparent gap between outer and inner rings */
+/* inner thick ring: no fixed midpoint stop, so it progresses correctly from 0% and stays aligned with the outer ring */
 .light-beam{
   position:absolute!important;inset:22px!important;border-radius:50%!important;
-  background:conic-gradient(from 270deg,#ffe778 0 var(--angle),#f0ae31 52%,#ffd561 var(--angle),rgba(34,42,60,.48) var(--angle) 360deg)!important;
-  -webkit-mask:radial-gradient(farthest-side,transparent calc(100% - 20px),#000 calc(100% - 19px));
-  mask:radial-gradient(farthest-side,transparent calc(100% - 20px),#000 calc(100% - 19px));
+  background:conic-gradient(from 270deg,#fff3a0 0deg,#ffe168 var(--angle),rgba(45,48,56,.46) var(--angle) 360deg)!important;
+  -webkit-mask:radial-gradient(farthest-side,transparent calc(100% - 22px),#000 calc(100% - 21px));
+  mask:radial-gradient(farthest-side,transparent calc(100% - 22px),#000 calc(100% - 21px));
   mix-blend-mode:normal!important;opacity:1!important;
-  filter:drop-shadow(0 0 9px rgba(255,190,58,.55));
+  filter:drop-shadow(0 0 10px rgba(255,193,52,.68));
 }
-/* inner field is intentionally transparent so the architecture remains visible */
+/* inner field remains transparent so the architectural background shows through */
 .light-orbit-inner{
   position:absolute!important;inset:48px!important;border-radius:50%!important;
-  background:transparent!important;border:1px solid rgba(231,191,105,.42)!important;
-  box-shadow:inset 0 0 22px rgba(2,8,23,.18)!important;
+  background:transparent!important;border:1px solid rgba(236,196,104,.46)!important;
+  box-shadow:inset 0 0 22px rgba(2,8,23,.15)!important;
   backdrop-filter:none!important;-webkit-backdrop-filter:none!important;
 }
-.orbit-star{position:absolute;z-index:5;color:#ffdb6b;font-size:11px;line-height:1;text-shadow:0 0 8px #f5b63d,0 0 15px rgba(255,190,60,.55)}
+.orbit-star{position:absolute;z-index:5;color:#ffe178;font-size:11px;line-height:1;text-shadow:0 0 9px #f8bb42,0 0 17px rgba(255,198,65,.72)}
 .orbit-star-top{top:-4px;left:50%;transform:translateX(-50%)}
 .orbit-star-right{right:-4px;top:50%;transform:translateY(-50%)}
 .orbit-star-bottom{bottom:-4px;left:50%;transform:translateX(-50%)}
 .orbit-star-left{left:-4px;top:50%;transform:translateY(-50%)}
 .allah-word{
-  z-index:6!important;font-size:56px!important;font-weight:800!important;color:#ffe88f!important;
+  z-index:6!important;font-size:56px!important;font-weight:800!important;color:#fff0a0!important;
   font-family:"Noto Naskh Arabic","Traditional Arabic",serif!important;
-  text-shadow:0 0 8px rgba(255,226,143,.78),0 0 18px rgba(241,177,48,.68),0 2px 8px #000!important;
+  text-shadow:0 0 9px rgba(255,237,157,.92),0 0 20px rgba(245,184,49,.82),0 0 34px rgba(230,155,27,.34),0 2px 8px #000!important;
   transform:translateY(-9px)
 }
-.light-percent{z-index:6!important;top:145px!important;font-size:15px!important;color:#f0dfbd!important;text-shadow:0 0 8px rgba(255,208,91,.20),0 2px 5px #000}
+.light-percent{z-index:6!important;top:145px!important;font-size:15px!important;color:#f4e4c4!important;text-shadow:0 0 9px rgba(255,210,93,.25),0 2px 5px #000}
 
 .light-copy{
   max-width:500px!important;margin:0 auto 4px!important;padding:0 10px!important;
