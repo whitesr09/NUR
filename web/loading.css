@@ -7,7 +7,7 @@ html:not(.nur-loader-done) #appShell{display:none!important}
 .nur-loading-screen{
   position:fixed!important;inset:0!important;z-index:9999!important;min-height:100svh!important;
   display:block!important;padding:0!important;overflow:hidden!important;
-  background:#030207 url('assets/loading-bg.jpg') center center/cover no-repeat!important;
+  background:#030207 url('assets/loading-bg.png') center center/cover no-repeat!important;
   opacity:1;transition:opacity .30s ease!important
 }
 .nur-loading-screen.is-leaving{opacity:0!important;pointer-events:none!important}
